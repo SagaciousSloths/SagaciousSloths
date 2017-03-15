@@ -45,7 +45,7 @@ Prefix each commit like so
   - (refactor) ...
   - (cleanup) ...
   - (test) ...
-  - (doc) ...
+  - (docs) ...
 
 Make changes and commits on your branch, and make sure that you
 only make changes that are relevant to this branch. If you find
@@ -74,7 +74,7 @@ before doing this. If there are no conflicts, this should just roll all
 of your changes back on top of the changes from upstream, leading to a
 nice, clean, linear commit history.
 
-If there are conflicting changes, git will start yelling at you part way
+If there are conflicting changes, git will start yelling at you part-way
 through the rebasing process. Git will pause rebasing to allow you to sort
 out the conflicts. You do this the same way you solve merge conflicts,
 by checking all of the files git says have been changed in both histories
@@ -134,7 +134,7 @@ This is just to help you organize your process
 - [ ] Did I cut my work branch off of master (don't cut new branches from existing feature brances)?
 - [ ] Did I follow the correct naming convention for my branch?
 - [ ] Is my branch focused on a single main change?
-  - [ ] Do all of my changes directly relate to this change?
+- [ ] Do all of my changes directly relate to this change?
 - [ ] Did I rebase the upstream master branch after I finished all my
   work?
 - [ ] Did I write a clear pull request message detailing what changes I made?
@@ -146,10 +146,9 @@ no problem getting your changes merged in.
 
 
 <!-- Links -->
-[style guide]: https://github.com/reactorcore/style-guide
+[style guide]: https://github.com/sagacioussloths/sagacioussloths
 [curriculum workflow diagram]: http://i.imgur.com/p0e4tQK.png
 [cons of merge]: https://f.cloud.github.com/assets/1577682/1458274/1391ac28-435e-11e3-88b6-69c85029c978.png
-[Bookstrap]: https://github.com/reactorcore/bookstrap
 [Git Flow]: http://nvie.com/posts/a-successful-git-branching-model/
 [GitHub Flow]: http://scottchacon.com/2011/08/31/github-flow.html
 [Squash]: http://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html
