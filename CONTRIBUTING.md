@@ -3,12 +3,12 @@
 ## General Workflow
 
 1. Fork the repo
-1. Cut a namespaced feature branch from master
-1. Make commits to your feature branch. Prefix each commit like so:
-1. When you've finished with your fix or feature, Rebase upstream changes into your branch. submit a pull request directly to master. Include a description of your changes.
-1. Your pull request will be reviewed by another maintainer. The point of code reviews is to help keep the codebase clean and of high quality and, equally as important, to help you grow as a programmer. If your code reviewer requests you make a change you don't understand, ask them why.
-1. Fix any issues raised by your code reviwer, and push your fixes as a single new commit.
-1. Once the pull request has been reviewed, it will be merged by another member of the team. Do not merge your own commits.
+2. Cut a namespaced feature branch from master
+3. Make commits to your feature branch. Prefix each commit like so:
+4. When you've finished with your fix or feature, Rebase upstream changes into your branch. submit a pull request directly to master. Include a description of your changes.
+5. Your pull request will be reviewed by another maintainer. The point of code reviews is to help keep the codebase clean and of high quality and, equally as important, to help you grow as a programmer. If your code reviewer requests you make a change you don't understand, ask them why.
+6. Fix any issues raised by your code reviwer, and push your fixes as a single new commit.
+7. Once the pull request has been reviewed, it will be merged by another member of the team. Do not merge your own commits.
 
 ## Detailed Workflow
 
@@ -17,7 +17,7 @@
 Use github’s interface to make a fork of the repo, then add that repo as an upstream remote:
 
 ```
-git remote add upstream https://github.com/reactorcore/<NAME_OF_REPO>.git
+git remote add upstream https://github.com/sagacioussloths/sagacioussloths.git
 ```
 
 ### Cut a namespaced feature branch from master
@@ -32,10 +32,10 @@ Your branch should follow this naming convention:
 These commands will help you do this:
 
 ``` bash
-
-# Creates your branch and brings you there
 git checkout -b `your-branch-name`
 ```
+
+# Creates your branch and brings you there
 
 ### Make commits to your feature branch. 
 
@@ -120,10 +120,10 @@ Thanks for contributing!
 ### Guidelines
 
 1. Uphold the current code standard:
-    - Keep your code [DRY][].
-    - Apply the [boy scout rule][].
+    - Keep your code [DRY][Don't repeat yourself].
+    - Apply the [boy scout rule][Leave it better than you found it].
     - Follow [STYLE-GUIDE.md](STYLE-GUIDE.md)
-1. Run the [tests][] before submitting a pull request.
+1. Run the [tests][./spec/] before submitting a pull request.
 1. Tests are very, very important. Submit tests if your pull request contains
    new, testable behavior.
 
@@ -139,7 +139,7 @@ This is just to help you organize your process
   work?
 - [ ] Did I write a clear pull request message detailing what changes I made?
 - [ ] Did I get a code review?
-  - [ ] Did I make any requested changes from that code review?
+- [ ] Did I make any requested changes from that code review?
 
 If you follow all of these guidelines and make good changes, you should have
 no problem getting your changes merged in.
@@ -147,8 +147,6 @@ no problem getting your changes merged in.
 
 <!-- Links -->
 [style guide]: https://github.com/reactorcore/style-guide
-[n-queens]: https://github.com/reactorcore/n-queens
-[Underbar]: https://github.com/reactorcore/underbar
 [curriculum workflow diagram]: http://i.imgur.com/p0e4tQK.png
 [cons of merge]: https://f.cloud.github.com/assets/1577682/1458274/1391ac28-435e-11e3-88b6-69c85029c978.png
 [Bookstrap]: https://github.com/reactorcore/bookstrap
