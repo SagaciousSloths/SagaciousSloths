@@ -12,6 +12,7 @@ var httpGet;
 
 exports.quiz = {
   get: function (req, res) {
+    console.log('In G. get');
     httpGet(function(parsedData) {
       // Use date as unique ID - change similar dates
       // console.log('Success, in quizzes func! Data:', parsedData);
@@ -19,6 +20,9 @@ exports.quiz = {
       console.log('Student arrays sent back to client:', students);
       res.status(200).send(students);
     });
+  },
+  post: function (req, res) {
+    // To do
   }
 };
 
