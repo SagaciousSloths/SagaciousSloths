@@ -1,5 +1,4 @@
 var express = require('express');
-var db = require('db');
 var parser = require('body-parser');
 var router = require('./routes.js');
 
@@ -18,6 +17,4 @@ if (!module.parent) {
   console.log('Listening on', app.get('port'));
 }
 
-
 //node request
-

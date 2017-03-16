@@ -1,12 +1,10 @@
-var controller = require('./controllers');
+var index = require('./index.js');
 var router = require('express').Router();
 
-router.get('/dashboard', controller.dashboard.get);
+router.get('/dashboard', index.dashboard.get);
 
-router.post('/dashboard', controller.dashboard.post);
+router.get('/quiz', index.quiz.get);
 
-router.get('/quiz', controller.quiz.get);
-
-router.post('/quiz', controller.quiz.post);
+router.post('/quiz', index.quiz.post);
 
 module.exports = router;
