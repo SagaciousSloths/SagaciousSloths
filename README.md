@@ -22,6 +22,17 @@
 ## Usage
 
 > Some usage instructions
+=== Google Form modifications ===
+HR staff can modify the sample Google Form:
+* Important: do not modify the date field, used to identify a specific student
+* Modifying titles is OK
+* If you add questions, add them at the end and keep the same spreadsheet if possible
+
+
+=== Google spreadsheet use by HR Staff ===
+The first X columns are automatically filled by Google Forms when prospective students fill out the Welcome Students form.
+
+
   Open the website on your laptop. For now, click on a deck to be shown that cohort's pictures. Click "Ready" when you think of a name for that person. If you know that person's name, say "Got It"; if not, click "Not Yet." The app will show you a card more often if you don't know that person and less once you already know them.
 
 ## Requirements
