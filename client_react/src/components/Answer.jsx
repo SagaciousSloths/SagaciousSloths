@@ -2,13 +2,13 @@ import React from 'react';
 
 const Answer = (props) => (
 	<div>
-		<div>
+		<h3 className="studentName">
 			{props.dummy[0]} {props.dummy[1]}
-		</div>
+		</h3>
 		<div>
-			<button>Got it!</button>
-			<button>Almost</button>
-			<button>Nope!</button>
+			<button className="gotItButton">Got it!</button>
+			<button className="almostButton">Almost</button>
+			<button className="nopeButton">Nope!</button>
 		</div>
 	</div>
 );
