@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Answer from './components/Answer.jsx';
 
-var dummy = ['kay', 'albito', 'url']
+var dummy = ['Kay', 'Albito', 'url']
 
 class Quiz extends React.Component {
 	constructor(props) {
@@ -21,14 +21,14 @@ class Quiz extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<div>
-					user profile pic {dummy[2]}
+			<div id="quiz">
+				<div className="profilePic"> 
+					<p>user profile pic {dummy[2]}</p>
 				</div>
 				<br />
 				<div>
 					{!this.state.ready ? (
-						<button onClick={this.isReady}>
+						<button onClick={this.isReady} className="readyButton">
 							Ready?
 						</button>
 					) : (
