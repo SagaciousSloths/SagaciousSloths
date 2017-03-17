@@ -1,0 +1,116 @@
+#quiz {
+	background-color: #c9def6;
+	padding: 100px;
+}
+
+.profilePic {
+	background-color: #40b1f6;
+	padding: 50px;
+	width: 100px;
+	height: 100px;
+	border-radius: 20px;
+	text-align: center;
+}
+
+.readyButton {
+  display: inline-block;
+  padding: 10px 10px;
+  font-size: 20px;
+  font-family: Arial;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #666666;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 5px #b2b2b2;
+}
+
+.readyButton:hover {background-color: #515151}
+
+.readyButton:active {
+  background-color: #515151;
+  box-shadow: 0 5px #b2b2b2;
+  transform: translateY(4px);
+}
+
+.studentName {
+	font-family: Arial;
+}
+
+.gotItButton {
+	background-color: #098105;
+	color: white;
+	font-family: Arial;
+	display: inline-block;
+  padding: 10px 10px;
+  font-size: 10px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 5px #b2b2b2;
+  margin-right: 10px;
+}
+
+.gotItButton:hover {background-color: #0a6707}
+
+.gotItButton:active {
+  background-color: #0a6707;
+  box-shadow: 0 5px #b2b2b2;
+  transform: translateY(4px);
+}
+
+.almostButton {
+	background-color: #e38817;
+	color: white;
+	font-family: Arial;
+	display: inline-block;
+  padding: 10px 10px;
+  font-size: 10px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 5px #b2b2b2;
+  margin-right: 10px;
+}
+
+.almostButton:hover {background-color: #cc7811}
+
+.almostButton:active {
+  background-color: #cc7811;
+  box-shadow: 0 5px #b2b2b2;
+  transform: translateY(4px);
+}
+
+.nopeButton {
+	background-color: #9a0f0f;
+	color: white;
+	font-family: Arial;
+	display: inline-block;
+  padding: 10px 10px;
+  font-size: 10px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 5px #b2b2b2;
+  margin-right: 10px;
+}
+
+.nopeButton:hover {background-color: #b03131}
+
+.nopeButton:active {
+  background-color: #b03131;
+  box-shadow: 0 5px #b2b2b2;
+  transform: translateY(4px);
+}
