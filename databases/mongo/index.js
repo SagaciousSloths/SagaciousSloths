@@ -19,48 +19,26 @@ var FamiliaritySchema = mongoose.Schema({
     AlgorithmParameters: {type: Array, default: [.618, -1, .009, 3.14159]}
 });
 
-FamiliaritySchema.methods.example = function () {
-  var greeting = this.StudentID
-    ? "Welcome back to the card for " + this.StudentID
-    : "This card doesn't have a studentID";
-  console.log(greeting);
-}
-
 var Familiarities = mongoose.model('Familiarities', FamiliaritySchema);
-var silence = new Familiarities({ StaffID:1, StudentID: 'Silence' });
-
-var fluffy = new Familiarities({ StaffID:1, StudentID: 'fluffy' });
-fluffy.example();
-
-console.log(silence.StaffID);
-console.log(silence.StudentID);
-
-fluffy.save(function (err, fluffy) {
-  if (err) return console.error(err);
-  fluffy.example();
-});
-
-Familiarities.find({}, function(error, result) { 
-  if (error){
-    console.error(error);
-  } else {
-    console.log(result);
-  }
-});
-
 
 module.exports = {
-  populateDB: function(cb) {
-    Familiarities.forEach(function(studentStaffCard) {
-      studentStaffCard.save(function (err, res) {
+  populateDB: function(newCards, cb) {
+    let mongoDocCards = []
+    newCards.forEach(function(card) {
+      let newCard = new Familiarities(card);
+      mongoDocCards.push(newCard);
+    });
+
+    mongoDocCards.forEach(function(studentStaffCard) {
+      studentStaffCard.save(function (err, result) {
         if (err) {
           return console.error(err);
         } else {
-          console.log(res);
-          cb(res);
+          console.log(result);
+          // cb(result);
         }
-      })
-    })
+      });
+    });
   },
   dropDB: function(cb) {
     Familiarities.remove({},function(error, result) { 
@@ -68,7 +46,7 @@ module.exports = {
         console.error(error);
       } else {
         console.log(result);
-        cb(result);
+        // cb(result);
       }
     });
   },
@@ -78,7 +56,7 @@ module.exports = {
         console.error(error);
       } else {
         console.log(result);
-        cb(result);
+        // cb(result);
       }
     });
   },
@@ -88,14 +66,15 @@ module.exports = {
         console.error(error);
       } else {
         console.log(result);
-        cb(result);
+        // cb(result);
       }
     });
   }
-  // Take in StudentID and StaffID from David (or JG). 
-  // So build query to update cards ALGO data based on the StudentID and StaffID
+  //Build query to update cards ALGO data based on the StudentID and StaffID
   //insert document for card for student and teacher &or update to 
 }
-
-// Build Schemas required for 1 Quiz MVP: 
-// All Required MongoDBs: Staff & Familiarities (Student_Staff Junction).
+let newCards = [{StudentID:'Jeff'}, {StudentID:'David'}, {StudentID:'JG'}, {StudentID:'Kay'}];
+module.exports.dropDB();
+module.exports.populateDB(newCards);
+module.exports.findOne({StudentID:'Jeff'});
+module.exports.findAll()
