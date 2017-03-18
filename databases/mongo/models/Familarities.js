@@ -2,18 +2,18 @@ var mongoose = require('mongoose');
 var db = require('../config');
 
 var FamiliaritySchema = mongoose.Schema({
-    StaffID: {type: String, default: '1'},
+  StaffID: {type: String, default: '1'},
     // Hard coded StaffID to 1 for now.
-    StudentID: {type: String}, //change to datetime for Spreadsheet
+  StudentID: {type: String}, //change to datetime for Spreadsheet
     // Add some random dummy data in Algorithm values
-    AlgorithmParameters: {type: Array, default: [.618, -1, .009, 3.14159]}
+  AlgorithmParameters: {type: Array, default: [.618, -1, .009, 3.14159]}
 });
 
 var Familiarities = mongoose.model('Familiarities', FamiliaritySchema);
 
 module.exports = {
   populateDB: function(newCards, cb) {
-    let mongoDocCards = []
+    let mongoDocCards = [];
     newCards.forEach(function(card) {
       let newCard = new Familiarities(card);
       mongoDocCards.push(newCard);
@@ -31,8 +31,8 @@ module.exports = {
     });
   },
   dropDB: function(cb) {
-    Familiarities.remove({},function(error, result) { 
-      if (error){
+    Familiarities.remove({}, function(error, result) { 
+      if (error) {
         console.error(error);
       } else {
         console.log(result);
@@ -42,7 +42,7 @@ module.exports = {
   },
   findAll: function(cb) {
     Familiarities.find({}, function(error, result) { 
-      if (error){
+      if (error) {
         console.error(error);
       } else {
         console.log(result);
@@ -54,7 +54,7 @@ module.exports = {
   //insert document for card for student and teacher &or update to 
   findCard: function(query, cb) { //structure: {StudentID: 3-15-2017 12:30:01, StaffID:1}
     Familiarities.find(query, function(error, result) { 
-      if (error){
+      if (error) {
         console.error(error);
       } else {
         console.log(result);
@@ -62,7 +62,7 @@ module.exports = {
       }
     });
   }
-}
+};
 
 
 // let cb = ((result) => result)
