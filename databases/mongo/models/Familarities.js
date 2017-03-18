@@ -14,6 +14,7 @@ var Familiarities = mongoose.model('Familiarities', FamiliaritySchema);
 module.exports = {
   populateDB: function(newCards, cb) {
     let mongoDocCards = [];
+
     newCards.forEach(function(card) {
       let newCard = new Familiarities(card);
       mongoDocCards.push(newCard);
@@ -42,6 +43,7 @@ module.exports = {
   },
   findAll: function(cb) {
     Familiarities.find({}, function(error, result) { 
+
       if (error) {
         console.error(error);
       } else {
@@ -54,6 +56,7 @@ module.exports = {
   //insert document for card for student and teacher &or update to 
   findCard: function(query, cb) { //structure: {StudentID: 3-15-2017 12:30:01, StaffID:1}
     Familiarities.find(query, function(error, result) { 
+
       if (error) {
         console.error(error);
       } else {
