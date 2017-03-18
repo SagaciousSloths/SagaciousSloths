@@ -3,53 +3,52 @@ exports.updateParameters = function (user, deck) {
 
 };
 
---- Display of deck page
+/*--- dashboard Display
 React:
  GET /dashboard    (with session ID)
 
 Server:
-  Algorithm:
-    query Familiarities for scores on all cards for a given user:
-      -> cardScores = {cardId: score, ...}, for the given user 
+  /dashboard routes to: 
+  request-handler: getDeckScores
+    calls mongo model: getUserScores:
+       query Familiarities for scores on all cards for the given user:
+        -> cardScores = {cardId: score, ...}, for the given user 
 
-    query Google for all (card id & deck name)
-    result = [{deckname: deckname, 
-              redscore: red score,
-              orange score: orange score,
-              green score: green score}, ...]
-
-    result = {deckname: {red: score, orange: score, green: score}, ...}
+    calls google: getAllCards:
+      query Google for all (card id, deck name)
+      result structure = {deckname: {red: score, orange: score, green: score}, ...}
 
     for each line of the Google table returned
-      increment the right red/orange/red value for result[deckname]
-        based up cardScores[cardId]
+      call bucketing method of algorithm to increment 
+        the appropriate red/orange/green value for result[deckname]
+        based on cardScores[cardId]
+      if the cardId is not found in Familiarities:
+        get score from algorithm (red)
+        call mongo: addFamiliarity(userId, cardId, score)
 
-
-
- ->   query Google for all (card id & deck name)
-        query Familiarities for that card id and user -> score
-          add that score to the total for (deck name, Red/Orange/Green)
-
-
-  return: set of (deck name + red,orange,green counts for logged in user),
-    for each deck
-
+  return: result to React
 
 
 --- Request for a specific deck quiz
 React:
- GET /deck/deckId
+ GET /deck/:deckname
  
 Server:
-  get the deck cards from red to green:
-    query Familiarities for red first, then orange cards for user 
-      into array of cardIds
-    request [first name, last name, pic link] corresponding to
-      these cardIds in order, from Google
+  request-handler getDeckQuiz:
+    calls algorithm for green score threshold
+    calls mongo model: getOrderedCardIds 
+      query Familiarities from highest to lowest score for user where score > green threshold
+        into array of cardIds 
+    
+    calls google model: getDeckCards(deckname, orderedIdList)
+      get [first name, last name, pic link] corresponding to
+        these cardIds in order
+      filter out cards that are not in the right deck
 
-  return: [[first name, last name, picture link], ...] 
-    in order of decreasing importance (=priority) for quiz
-
+      returns: [[first name, last name, picture link], ...] 
+       in order of decreasing importance (=priority) for quiz
+ 
+  returns result from google model
 
 
 --- After each card of quiz
@@ -67,14 +66,15 @@ Algorithm:
 
 
 
+--- Add records to Familiarities
+To reset the system:
+
+When a staff member registers:
+  Get all card records from Google
+  For each card record
+    call getStartScore from algorithm (redest?)
+    Call addFamiliarity(userId, cardId, score)
 
 
 
----- End of quiz
-React:
- POST /api/parameters   with data: userId (staff id) + deck Id
-
-Server:
- returns updated red, orange and green totals for that deckId + userId
-
-
+*/
