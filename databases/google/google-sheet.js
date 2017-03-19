@@ -26,7 +26,14 @@ exports.quiz = {
   }
 };
 
+exports.getAllCards = function () {};
 
+// not needed: exports.getAllCardIds = function () {};
+
+exports.getQuizCards = function (cardIds, deckname) {};
+
+
+//----------- Helper functions ------------
 httpGet = function (callback) {
   query = url + spreadsheetId + query + API_KEY;
   console.log('query', query);

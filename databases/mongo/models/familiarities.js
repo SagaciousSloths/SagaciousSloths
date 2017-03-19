@@ -12,6 +12,26 @@ var FamiliaritySchema = mongoose.Schema({
 var Familiarities = mongoose.model('Familiarities', FamiliaritySchema);
 
 module.exports = {
+
+  addFamiliarity: function (userId, cardId, algoData) {
+    // For use when a card familiarity is not found for a user
+  },
+
+  addFamiliarities: function(familiarities) {  
+    // Called when a user registers on site
+    // familiarities: [{userId: val,cardId: val, algoData: {obj}}, ...]
+
+  },
+
+  
+
+  getCardAlgoData: function (userId) {},
+
+  // query Familiarities from highest to lowest score for user
+  // where algoData.bucket is not green
+  // into ordered array of cardIds, highest red score first
+  getOrderedCardIds(userId) {},
+
   populateDB: function(newCards, cb) {
     let mongoDocCards = [];
 

@@ -4,8 +4,10 @@ var googleSheet = require(__dirname + '/../databases/google/google-sheet');
 
 router.get('/dashboard', handlers.dashboard.get);
 
-router.get('/quiz', googleSheet.quiz.get);
+router.get('/quiz', handlers.quiz.get);
 
 router.post('/quiz', googleSheet.quiz.post);
+
+router.get('/api/reset', handlers.api.reset);
 
 module.exports = router;

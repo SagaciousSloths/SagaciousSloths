@@ -1,7 +1,9 @@
-exports.updateParameters = function (user, deck) {
-	// TODO: use the user and deck params
-
+exports.addCard = function () {
+  var result = {bucket: 'red'};
+  return result;
 };
+
+
 
 /*--- dashboard Display
 React:
@@ -31,7 +33,7 @@ Server:
 
 --- Request for a specific deck quiz
 React:
- GET /deck/:deckname
+ GET /quiz/:deckname
  
 Server:
   request-handler getDeckQuiz:
