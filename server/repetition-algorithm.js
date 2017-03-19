@@ -1,7 +1,9 @@
-exports.updateParameters = function (user, deck) {
-	// TODO: use the user and deck params
-
+exports.addCard = function () {
+  var result = {bucket: 'red'};
+  return result;
 };
+
+
 
 /*--- dashboard Display
 React:

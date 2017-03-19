@@ -26,7 +26,12 @@ exports.quiz = {
   }
 };
 
+exports.getAllCards = function () {};
 
+exports.getAllCardIds = function () {};
+
+
+//----------- Helper functions ------------
 httpGet = function (callback) {
   query = url + spreadsheetId + query + API_KEY;
   console.log('query', query);
