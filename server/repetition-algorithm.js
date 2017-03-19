@@ -33,7 +33,7 @@ Server:
 
 --- Request for a specific deck quiz
 React:
- GET /deck/:deckname
+ GET /quiz/:deckname
  
 Server:
   request-handler getDeckQuiz:

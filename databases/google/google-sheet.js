@@ -28,7 +28,9 @@ exports.quiz = {
 
 exports.getAllCards = function () {};
 
-exports.getAllCardIds = function () {};
+// not needed: exports.getAllCardIds = function () {};
+
+exports.getQuizCards = function (cardIds, deckname) {};
 
 
 //----------- Helper functions ------------

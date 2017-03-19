@@ -23,7 +23,14 @@ module.exports = {
 
   },
 
+  
+
   getCardAlgoData: function (userId) {},
+
+  // query Familiarities from highest to lowest score for user
+  // where algoData.bucket is not green
+  // into ordered array of cardIds, highest red score first
+  getOrderedCardIds(userId) {},
 
   populateDB: function(newCards, cb) {
     let mongoDocCards = [];

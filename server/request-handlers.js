@@ -4,10 +4,12 @@ var algorithm = require('./repetition-algorithm');
 
 
   // NOTE: mongo structure:
-  //   userId, cardId, algoData (an object) 
+  //   userId, cardId, algoData (an object) {bucket: 'red/orange/green'}
 
-var createFamiliarities = function() {
-
+// GET /api/reset -----------------
+// Creates the initial Mongo Familiarities table
+// based on a Google spreadsheet of names
+var createFamiliarities = function(req, res) {
   // Future sprint: get current user ID and pass it as param to getUserScores
   var userId = 0;
 
@@ -38,11 +40,15 @@ var createFamiliarities = function() {
     };  
   });
   
+  // Array of objects:
   // [{userId: 0, cardId: 'complex unique string1', algoData: {TBD}},...]
-  mongo.addFamiliarities(familiarities);
+  mongo.addFamiliarities(familiarities);  
 
+  // may have to reset the table
+  res.status(200).send('Reset complete: familiarities table loaded.');
 };
 
+// GET /dashboard ----------------
 var getDeckBucketCounts = function (req, res) {
   // Buckets are: 'red', 'orange' and 'green'
   
@@ -55,11 +61,11 @@ var getDeckBucketCounts = function (req, res) {
 
   // TESTING:
   cardAlgoData = {
-    'complex unique string1': {bucket: 'red'},
+    'complex unique string1': {bucket: 'red'},  // full algoData object
     'complex unique string2': {bucket: 'green'},
   };
 
-  var cards = googleSheet.getAllCardIds();
+  var cards = googleSheet.getAllCards();
 
   // TESTING:
   cards = [ {
@@ -103,8 +109,55 @@ var getDeckBucketCounts = function (req, res) {
 }; 
 
 
+// GET /quiz/:deckname -------------------
+var getDeckQuiz = function (req, res) {
+
+  // TODO: find out where the last part of the path is in req
+  var deckname = 'HRSF73';  // for TESTING
+
+  // Future sprint: get current user ID and pass it as param to getUserScores
+  var userId = 0;
+
+  // query Familiarities from highest to lowest score for user
+  // where algoData.bucket is not green
+  // into ordered array of cardIds, highest red score first
+  // Initial implementation: return rows with red first, then orange,
+  // ignoring green rows
+  var cardIds = mongo.getOrderedCardIds(userId);
+
+  // TESTING:
+  cardIds = ['complex unique string1', 'complex unique string2'];
+
+  var quizCards = googleSheet.getQuizCards(cardIds, deckname);
+
+  // TESTING:
+  quizCards = [ {
+    id: 'complex unique string1', 
+    firstname: 'J-G',
+    lastname: 'Demathieu',
+    pictureUrl: 'https://drive.google.com/open?id=0B7BE9TWkUdJXaExxWTJRdXdTdkk',
+    deck: 'HRSF73'
+  }, {
+    id: 'complex unique string2',
+    firstname: 'David',
+    lastname: 'Deng',
+    pictureUrl: 'https://drive.google.com/open?id=0B7BE9TWkUdJXOE9TaWVGdjAtZ1hmR1ZHSFFUXzhjNzRuLWVz',
+    deck: 'HRSF73'
+  }];
+
+  res.status(200).send(quizCards);
+};
+
+
+//------ Exports -------------------------
 module.exports = {
   dashboard: {
     get: getDeckBucketCounts,
+  },
+  quiz: {
+    get: getDeckQuiz,
+  },
+  api: {
+    reset: createFamiliarities,
   }
 };
