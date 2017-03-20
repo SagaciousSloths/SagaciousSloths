@@ -6,47 +6,49 @@ var algorithm = require('./repetition-algorithm');
   // NOTE: mongo structure:
   //   userId, cardId, algoData (an object) {bucket: 'red/orange/green'}
 
-// GET /api/reset -----------------
-// Creates the initial Mongo Familiarities table
+// Creates the initial Mongo Familiarities table 
+// NOT NEEDED: can build it through the initial call to /dashboard
 // based on a Google spreadsheet of names
-var createFamiliarities = function(req, res) {
-  // Future sprint: get current user ID and pass it as param to getUserScores
-  var userId = 0;
+// var createFamiliarities = function(req, res) {
+//   // Future sprint: get current user ID and pass it as param to getUserScores
+//   var userId = 0;
 
-  var cards = googleSheet.getAllCards();
+//   var cards = googleSheet.getAllCards(function(cards) {
+//     console.log('cards:', cards);
 
-  // TESTING:
-  cards = [{
-    id: 'complex unique string1',
-    firstname: 'J-G',
-    lastname: 'Demathieu',
-    pictureUrl: 'http//jg...',
-    deck: 'HRSF74'
-  }, {
-    id: 'complex unique string2',
-    firstname: 'David',
-    lastname: 'Deng',
-    pictureUrl: 'http//david...',
-    deck: 'HRSF73'
-  }];
+//     // TESTING:
+//     // cards = [{
+//     //   id: 'complex unique string1',
+//     //   firstname: 'J-G',
+//     //   lastname: 'Demathieu',
+//     //   pictureUrl: 'http//jg...',
+//     //   deck: 'HRSF74'
+//     // }, {
+//     //   id: 'complex unique string2',
+//     //   firstname: 'David',
+//     //   lastname: 'Deng',
+//     //   pictureUrl: 'http//david...',
+//     //   deck: 'HRSF73'
+//     // }];
 
-  var algoData = algorithm.addCard();
+//     var algoData = algorithm.addCard();
 
-  var familiarities = cards.map(function(card) {
-    return {
-      userId: userId,
-      cardId: card.id,
-      algoData: algoData
-    };
-  });
+//     var familiarities = cards.map(function(card) {
+//       return {
+//         userId: userId,
+//         cardId: card.id,
+//         algoData: algoData
+//       };
+//     });
 
-  // Array of objects:
-  // [{userId: 0, cardId: 'complex unique string1', algoData: {TBD}},...]
-  mongo.addFamiliarities(familiarities);
+//     // Array of objects:
+//     // [{userId: 0, cardId: 'complex unique string1', algoData: {TBD}},...]
+//     mongo.addFamiliarities(familiarities);
 
-  // may have to reset the table
-  res.status(200).send('Reset complete: familiarities table loaded.');
-};
+//     // may have to reset the table
+//     res.status(200).send('Reset complete: familiarities table loaded.');    
+//   });
+// };
 
 // GET /dashboard ----------------
 var getDeckBucketCounts = function (req, res) {
@@ -55,57 +57,64 @@ var getDeckBucketCounts = function (req, res) {
   // Future sprint: get current user ID and pass it as param to getUserScores
   var userId = 0;
 
-  var cardAlgoData = mongo.getCardAlgoData(userId);
+  mongo.getCardIds(userId, function(cardIds) {
 
-  // {cardId: algoData, ...}, for the given user
+    // TESTING:
+    // cardIds = {
+    //   'complex unique string1': {algoData},  // full algoData object
+    //   'complex unique string2': {algoData},
+    // };
 
-  // TESTING:
-  cardAlgoData = {
-    'complex unique string1': {bucket: 'red'},  // full algoData object
-    'complex unique string2': {bucket: 'green'},
-  };
+    console.log('received from Mongoose getCardIds:', cardIds);
 
-  var cards = googleSheet.getAllCards();
+    var cards = googleSheet.getAllCards(function(cards) {
+      // TESTING:
+      // cards = [ {
+      //   id: 'complex unique string1',
+      //   firstname: 'J-G',
+      //   lastname: 'Demathieu',
+      //   pictureUrl: 'http//jg...',
+      //   deck: 'HRSF74'
+      // }, {
+      //   id: 'complex unique string2',
+      //   firstname: 'David',
+      //   lastname: 'Deng',
+      //   pictureUrl: 'http//david...',
+      //   deck: 'HRSF73'
+      // }];
+      console.log('cards:', cards);
+      
 
-  // TESTING:
-  cards = [ {
-    id: 'complex unique string1',
-    firstname: 'J-G',
-    lastname: 'Demathieu',
-    pictureUrl: 'http//jg...',
-    deck: 'HRSF74'
-  }, {
-    id: 'complex unique string2',
-    firstname: 'David',
-    lastname: 'Deng',
-    pictureUrl: 'http//david...',
-    deck: 'HRSF73'
-  }];
+      let results = {};
 
-  let results = {};
+      cards.forEach(function(card) {
+        let bucket;
+        let algoData;
 
-  cards.forEach(function(card) {
-    let bucket;
-    if (!cardAlgoData[card.id]) {
-      // the user hasn't seen this card yet
-      var algoData = algorithm.addCard();  // the initial score of any new card
-      mongo.addFamiliarity(userId, cardId, algoData);
-      bucket = algoData.bucket;
-    } else {
-      bucket = cardAlgoData[card.id].bucket;
-    }
+        if (!cardIds[card.id]) {
+          // the user hasn't seen this card yet
+          algoData = algorithm.addCard();  // the initial score of any new card
+          mongo.addFamiliarity(userId, card.id, algoData);
+        } else {
+          console.log('Familiar card!');
+          algoData = cardIds[card.id];
+        }
+        bucket = algorithm.getBucket(algoData);
 
-    if (!results[card.deck]) {
-      results[card.deck] = {red: 0, orange: 0, green: 0};  // create the deck
-    }
+        if (!results[card.deck]) {
+          results[card.deck] = {red: 0, orange: 0, green: 0};  // create the deck
+        }
 
-    results[card.deck][bucket]++;
+        results[card.deck][bucket]++;
+      });
+
+      console.log('Deck results:', results);
+
+      res.status(200).send(results);
+      // {deckname: {red: score, orange: score, green: score}, ...}
+      
+    });    
   });
-
-  console.log('Deck results:', results);
-
-  res.status(200).send(results);
-  // {deckname: {red: score, orange: score, green: score}, ...}
 };
 
 
@@ -113,7 +122,7 @@ var getDeckBucketCounts = function (req, res) {
 var getDeckQuiz = function (req, res) {
 
   // TODO: find out where the last part of the path is in req
-  var deckname = 'HRSF73';  // for TESTING
+  var deckname = 'SF72';  // for TESTING
 
   // Future sprint: get current user ID and pass it as param to getUserScores
   var userId = 0;
@@ -123,37 +132,57 @@ var getDeckQuiz = function (req, res) {
   // into ordered array of cardIds, highest red score first
   // Initial implementation: return rows with red first, then orange,
   // ignoring green rows
-  var cardIds = mongo.getOrderedCardIds(userId);
 
-  // TESTING:
-  cardIds = ['complex unique string1', 'complex unique string2'];
+  mongo.getOrderedCardIds(userId, function(orderedCardIds) {
+    console.log('ordered cardIds in getDeckQuiz:', orderedCardIds);
+    // TESTING:
+    // cardIds = ['complex unique string1', 'complex unique string2': '1'];
 
-  var quizCards = googleSheet.getQuizCards(cardIds, deckname);
+    var quizCards = googleSheet.getQuizCards(orderedCardIds, deckname);
 
-  // TESTING:
-  quizCards = [ {
-    id: 'complex unique string1',
-    firstname: 'J-G',
-    lastname: 'Demathieu',
-    pictureUrl: 'http://i.imgur.com/EAju0FG.jpg',
-    deck: 'HRSF73'
-  }, {
-    id: 'complex unique string2',
-    firstname: 'Jeffrey',
-    lastname: 'Milberger',
-    pictureUrl: 'http://i.imgur.com/OudMPBX.jpg',
-    deck: 'HRSF72'
-  }, {
-    id: 'complex unique string3',
-    firstname: 'Kay',
-    lastname: 'Albito',
-    pictureUrl: 'http://i.imgur.com/H8eB2v5.jpg',
-    deck: 'HRSF72'
-  }];
+    // TESTING:
+    // quizCards = [ {
+    //   id: 'complex unique string1',
+    //   firstname: 'J-G',
+    //   lastname: 'Demathieu',
+    //   pictureUrl: 'https://lh6.googleusercontent.com/uDKlK4ZoXoRxEc1-JbdzeH4eTnA_eQetXUOwqphbfaUQgkut6TRpuAa73Os6CrYHKgIKodqh9vyx1VBdCJ0LINbhZ9L8LHM_eRD1=w2560-h1398-rw',
+    //   deck: 'HRSF73'
+    // }, {
+    //   id: 'complex unique string2',
+    //   firstname: 'David',
+    //   lastname: 'Deng',
+    //   pictureUrl: 'https://drive.google.com/open?id=0B7BE9TWkUdJXOE9TaWVGdjAtZ1hmR1ZHSFFUXzhjNzRuLWVz',
+    //   deck: 'HRSF73'
+    // }];
 
-  res.status(200).send(quizCards);
+    res.status(200).send(quizCards);
+    
+  });
 };
 
+
+// POST /api/card
+// data: {cardId: 'cardId', quizResult: 'gotIt/almost/nope'}
+var updateUserCardFamiliarity = function (req, res) {
+
+  // Future sprint: get current user ID and pass it as param to getUserScores
+  var userId = 0;
+
+  var cardID;
+  var quizResult;
+  ({cardId, quizResult} = req.body());
+
+  algorithm.updateFamiliarity(userId, cardId, quizResult);
+
+  res.status(201).send('Updated card-user data');
+};
+
+var resetMongo = function (req, res) {
+  mongo.resetDB(function(dbResetResult) {
+    console.log('dbResetResult: ', dbResetResult);
+    res.status(200).send('Mongo Familiarities table reset');
+  });
+};
 
 //------ Exports -------------------------
 module.exports = {
@@ -164,6 +193,7 @@ module.exports = {
     get: getDeckQuiz,
   },
   api: {
-    reset: createFamiliarities,
+    reset: resetMongo,
+    card: updateUserCardFamiliarity,
   }
 };

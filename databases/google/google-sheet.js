@@ -7,35 +7,23 @@ var url = 'https://sheets.googleapis.com/v4/spreadsheets/';
 var spreadsheetId = '1T-tnJlfiqUyQZMEJe9W-d6OKg5vVchhjn_L7ffIXyyI';
 // https://docs.google.com/spreadsheets/d/1T-tnJlfiqUyQZMEJe9W-d6OKg5vVchhjn_L7ffIXyyI/edit?usp=sharing
 
-var query = '/values:batchGet?majorDimension=ROWS&ranges=B2%3AD5&valueRenderOption=FORMATTED_VALUE&key=';
-var httpGet;
+var sheetRange = '/values:batchGet?majorDimension=ROWS&ranges=B2%3AE100&valueRenderOption=FORMATTED_VALUE&key=';
 
-exports.quiz = {
-  get: function (req, res) {
-    console.log('In G. get');
-    httpGet(function(parsedData) {
-      // Use date as unique ID - change similar dates
-      // console.log('Success, in quizzes func! Data:', parsedData);
-      var students = parsedData.valueRanges[0].values;
-      console.log('Student arrays sent back to client:', students);
-      res.status(200).send(students);
-    });
-  },
-  post: function (req, res) {
-    // To do
-  }
-};
+// exports.quiz = {
+//   get: function (req, res) {
+//     console.log('In G. get');
+//     exports.getAllCards(function(parsedData) {
+//       // Use date as unique ID - change similar dates
+//       // console.log('Success, in quizzes func! Data:', parsedData);
+//       var students = parsedData.valueRanges[0].values;
+//       console.log('Student arrays sent back to client:', students);
+//       res.status(200).send(students);
+//     });
+//   },
+// };
 
-exports.getAllCards = function () {};
-
-// not needed: exports.getAllCardIds = function () {};
-
-exports.getQuizCards = function (cardIds, deckname) {};
-
-
-//----------- Helper functions ------------
-httpGet = function (callback) {
-  query = url + spreadsheetId + query + API_KEY;
+exports.getAllCards = function (callback) {
+  let query = url + spreadsheetId + sheetRange + API_KEY;
   console.log('query', query);
 
   https.get(query, (res) => {
@@ -63,8 +51,20 @@ httpGet = function (callback) {
     res.on('end', () => {
       try {
         let parsedData = JSON.parse(rawData);
+        parsedData = parsedData.valueRanges[0].values;
         // console.log('parsedData = ', parsedData);
-        callback(parsedData);
+
+        var result = [];
+        parsedData.forEach(function(elem) {
+          var card = {};
+          card.id = elem[0] + elem[1];
+          card.firstname = elem[0];
+          card.lastname = elem[1];
+          card.pictureUrl = elem[2];
+          card.deck = elem[3];
+          result.push(card);
+        });
+        callback(result);
 
       } catch (e) {
         console.log(e.message);
@@ -74,6 +74,40 @@ httpGet = function (callback) {
     console.log(`Got error: ${e.message}`);
   });  
 };
+
+// not needed: exports.getAllCardIds = function () {};
+
+exports.getQuizCards = function (cardIds, deckname) {
+  exports.getAllCards(function(cards) {
+
+    console.log('All cards in sheets:', cards);
+
+    // create keys for fast lookup
+    var cardsObject = {};
+    cards.forEach(function (card) {
+      cardsObject[card.id] = card;
+    });
+
+    var quizCards = [];
+      
+    // console.log('@@@ cardsObject', cardsObject);
+    // console.log('Deckname', deckname);
+
+    cardIds.forEach(function(cardId) {
+      // console.log('cardId:', cardId);
+      if (cardsObject[cardId].deck === deckname) {
+        quizCards.push(cardsObject[cardId]);
+      }
+    });
+
+    // the cards not in the list are ignored.
+    console.log('quiz cards:', quizCards);
+    return quizCards;
+    
+  });
+};
+
+
 
 
 
