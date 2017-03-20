@@ -38,9 +38,9 @@ exports.updateFamiliarity = function (userId, cardId, quizResult) {
 };
 
 
-var bucketize = function (date) {
+exports.getBucket = function (algoData) {
   color = '';
-  var daysElapsed = (Date.now() - date) / dayInMilliSeconds;
+  var daysElapsed = (Date.now() - algoData.nextquizdate) / dayInMilliSeconds;
 
   if ( daysElapsed >= 1) { 
     return 'red';
@@ -50,6 +50,11 @@ var bucketize = function (date) {
     return 'green';
   }
 };
+
+exports.getQuizDateThreshhold = function() {
+  return Date.now();
+};
+
 
 
 

@@ -86,14 +86,15 @@ var getDeckBucketCounts = function (req, res) {
 
   cards.forEach(function(card) {
     let bucket;
+    let algoData;
     if (!cardAlgoData[card.id]) {
       // the user hasn't seen this card yet
-      var algoData = algorithm.addCard();  // the initial score of any new card
+      algoData = algorithm.addCard();  // the initial score of any new card
       mongo.addFamiliarity(userId, cardId, algoData);
-      bucket = algoData.bucket;
     } else {
-      bucket = cardAlgoData[card.id].bucket;
+      algoData = cardAlgoData[card.id];
     }
+    bucket = algorithm.getBucket(algoData);
 
     if (!results[card.deck]) {
       results[card.deck] = {red: 0, orange: 0, green: 0};  // create the deck
