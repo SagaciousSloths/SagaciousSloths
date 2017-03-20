@@ -3,106 +3,114 @@ import ReactDOM from 'react-dom';
 import Answer from './components/Answer.jsx';
 import $ from 'jquery';
 
-var dummy = ['Kay', 'Albito', 'url']
-
 class Quiz extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			ready: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      counter: 0,
+      ready: false,
       firstname: '',
       lastname: '',
       deck: '',
-      pictureUrl: 'http://i.imgur.com/EAju0FG.jpg'
-		};
-		this.isReady = this.isReady.bind(this);
-    this.getAllStudents = this.getAllStudents.bind(this);
-	}
-
-  getAllStudents() {
-  	$.ajax({
-    	url: '/quiz',
-      method: 'GET',
-      success: function(data) {
-        var student = data[0];
-        console.log(student);
-
-        this.setState({
-          firstname: student.firstname,
-          lastname: student.lastname,
-          deck: student.deck,
-          pictureUrl: student.pictureUrl
-        })
-      }.bind(this),
-      error: function(err) {
-      	console.error('error', err);
-      }
-    });
+      pictureUrl: ''
+    };
+    this.isReady = this.isReady.bind(this);
+    this.getFirstStudent = this.getFirstStudent.bind(this);
+    this.moveBackToReady = this.moveBackToReady.bind(this);
+    this.renderNextStudent = this.renderNextStudent.bind(this);
+    this.saveUserAnswer = this.saveUserAnswer.bind(this);
   }
 
-  getAllScores() {
+  componentDidMount () {
+   this.getFirstStudent(); 
+  }
+
+  getFirstStudent() {
     $.ajax({
-      url: '/dashboard',
+      url: '/quiz',
       method: 'GET',
       success: function(data) {
-        console.log('data', data);
-      },
+        this.setState({
+          firstname: data[0].firstname,
+          lastname: data[0].lastname,
+          deck: data[0].deck,
+          pictureUrl: data[0].pictureUrl
+        })
+      }.bind(this),
       error: function(err) {
         console.error('error', err);
       }
     });
   }
 
-
   saveUserAnswer() {
-  	$.ajax({
-    	url: '/quiz',
+    $.ajax({
+      url: '/quiz',
       method: 'POST',
       contentType: 'application/json',
       success: function() {
-				console.log('success');
-      }
-      ,
+        console.log('success');
+      },
       error: function() {
         console.error('error');
       }
+    });
+    this.state.counter++;
+    this.moveBackToReady();
+    this.renderNextStudent();
+  }
+
+  renderNextStudent() {
+    $.ajax({
+      url: '/quiz',
+      method: 'GET',
+      success: function(data) {
+        this.setState({
+          firstname: data[this.state.counter].firstname,
+          lastname: data[this.state.counter].lastname,
+          deck: data[this.state.counter].deck,
+          pictureUrl: data[this.state.counter].pictureUrl
+        })
+      }.bind(this),
+      error: function(err) {
+        console.error('error', err);
+      }
+    });
+  }
+
+  isReady() {
+    this.setState({
+      ready: true
+    });
+  }
+
+  moveBackToReady() {
+    this.setState({
+      ready: false
     })
   }
 
-	isReady() {
-		this.setState({
-			ready: true
-		});
-
-    this.getAllStudents();
-    this.getAllScores();
-	}
-
-	render() {
-		return (
-			<div id="quiz">
-				<div>
+  render() {
+    return (
+      <div id="quiz">
+        <div>
           <img className="profilePic" src={this.state.pictureUrl}/>
-				</div>
-				<br />
-				<div>
-					{!this.state.ready ? (
-						<button onClick={this.isReady} className="readyButton">
-							Ready?
-						</button>
-					) : (
-						<Answer
-            firstname={this.state.firstname}
-            lastname={this.state.lastname}
-            />
-					)}
-				</div>
-			</div>
-		)
-	}
+        </div>
+        <br />
+        <div>
+          {!this.state.ready ? (
+            <button onClick={this.isReady} className="readyButton">
+              Ready?
+            </button>
+          ) : (
+            <Answer firstname={this.state.firstname} lastname={this.state.lastname} saveUserAnswer={this.saveUserAnswer} />
+          )}
+        </div>
+      </div>
+    )
+  }
 }
 
 ReactDOM.render(
-	<Quiz />, document.getElementById('root')
+  <Quiz />, document.getElementById('root')
 );
-

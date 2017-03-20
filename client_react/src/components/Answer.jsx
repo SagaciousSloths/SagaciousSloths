@@ -6,9 +6,9 @@ const Answer = (props) => (
 			{props.firstname} {props.lastname}
 		</h3>
 		<div>
-			<button className="gotItButton">Got it!</button>
-			<button className="almostButton">Almost</button>
-			<button className="nopeButton">Nope!</button>
+			<button onClick={props.saveUserAnswer} className="gotItButton">Got it!</button>
+			<button onClick={props.saveUserAnswer} className="almostButton">Almost</button>
+			<button onClick={props.saveUserAnswer} className="nopeButton">Nope!</button>
 		</div>
 	</div>
 );
