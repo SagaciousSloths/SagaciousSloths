@@ -88,9 +88,9 @@ module.exports = {
 };
 
 
-// let cb = ((result) => result)
-// let newCards = [{StudentID:'Jeff'}, {StudentID:'David'}, {StudentID:'JG'}, {StudentID:'Kay'}];
+// let cb = ((result) => result);
+// let newCards = [{StudentID: 'Jeff'}, {StudentID: 'David'}, {StudentID: 'JG'}, {StudentID: 'Kay'}];
 // module.exports.dropDB(cb);
 // module.exports.populateDB(newCards, cb);
-// module.exports.findOne({StudentID:'Jeff'}, cb);
-// module.exports.findAll(cb)
+// module.exports.findAll(cb);
+// module.exports.findCard({StudentID: 'Jeff'}, cb);
