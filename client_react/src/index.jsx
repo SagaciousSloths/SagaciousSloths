@@ -21,8 +21,6 @@ class Quiz extends React.Component {
     this.saveUserAnswer = this.saveUserAnswer.bind(this);
   }
 
-  // adding componentDidMount
-
   componentDidMount () {
    this.getFirstStudent(); 
   }
@@ -52,8 +50,7 @@ class Quiz extends React.Component {
       contentType: 'application/json',
       success: function() {
         console.log('success');
-      }
-      ,
+      },
       error: function() {
         console.error('error');
       }
