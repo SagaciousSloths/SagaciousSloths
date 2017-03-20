@@ -6,7 +6,7 @@ router.get('/dashboard', handlers.dashboard.get);
 
 router.get('/quiz', handlers.quiz.get);
 
-router.post('/quiz', googleSheet.quiz.post);
+router.post('/api/card', handlers.api.card);
 
 router.get('/api/reset', handlers.api.reset);
 

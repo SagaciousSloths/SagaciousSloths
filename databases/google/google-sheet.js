@@ -21,9 +21,6 @@ exports.quiz = {
       res.status(200).send(students);
     });
   },
-  post: function (req, res) {
-    // To do
-  }
 };
 
 exports.getAllCards = function () {};

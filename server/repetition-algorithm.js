@@ -1,7 +1,56 @@
+var mongo = require(__dirname + '/../databases/mongo/models/familiarities');
+
+const dayInMilliSeconds = 86400000;  // 1000 * 60 * 60 * 24
+
+/* 
+algoData object:
+  efactor: E-Factor value,
+  interval: inter-repetition interval after the n-th repetition, in days,
+  nextquizdate: due date for next quiz,
+*/
+
+// TODO: general change: compute buckets in real time, when asked
+
 exports.addCard = function () {
-  var result = {bucket: 'red'};
+  var result = {
+    efactor: 2.5, 
+    repetition: 1, 
+    nextquizdate: Date.now(),
+  };
   return result;
 };
+
+// Update algoData after a quiz
+exports.updateFamiliarity = function (userId, cardId, quizResult) {
+  
+  // Testing
+  cardId = 'complex unique string1';
+  quizResult = 'almost';
+
+  var algoData = mongo.getAlgoData(userId, cardId);
+  // Testing, to remove:
+  algoData = algorithm.addCard();
+
+  if (quizResult === 'nope') {
+  // if algoData.nextquizdate
+  }
+
+};
+
+
+var bucketize = function (date) {
+  color = '';
+  var daysElapsed = (Date.now() - date) / dayInMilliSeconds;
+
+  if ( daysElapsed >= 1) { 
+    return 'red';
+  } else if (daysElapsed >= 0 ) {
+    return 'orange';
+  } else {
+    return 'green';
+  }
+};
+
 
 
 

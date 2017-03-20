@@ -155,6 +155,24 @@ var getDeckQuiz = function (req, res) {
 };
 
 
+// POST /api/card
+// data: {cardId: 'cardId', quizResult: 'gotIt/almost/nope'}
+var updateUserCardFamiliarity = function (req, res) {
+
+  // Future sprint: get current user ID and pass it as param to getUserScores
+  var userId = 0;
+
+  var cardID;
+  var quizResult;
+  ({cardId, quizResult} = req.body());
+
+  algorithm.updateFamiliarity(userId, cardId, quizResult);
+
+  res.status(201).send('Updated card-user data');
+};
+
+
+
 //------ Exports -------------------------
 module.exports = {
   dashboard: {
@@ -165,5 +183,6 @@ module.exports = {
   },
   api: {
     reset: createFamiliarities,
+    card: updateUserCardFamiliarity,
   }
 };
