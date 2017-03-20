@@ -1,31 +1,59 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Answer from './components/Answer.jsx';
+import $ from 'jquery';
 
-// var dummy = ['Kay', 'Albito', 'url']
+var dummy = ['Kay', 'Albito', 'url']
 
 class Quiz extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			ready: false,
+      firstname: '',
+      lastname: '',
+      deck: '',
+      pictureUrl: 'https://lh6.googleusercontent.com/uDKlK4ZoXoRxEc1-JbdzeH4eTnA_eQetXUOwqphbfaUQgkut6TRpuAa73Os6CrYHKgIKodqh9vyx1VBdCJ0LINbhZ9L8LHM_eRD1=w2560-h1398-rw'
 		};
 		this.isReady = this.isReady.bind(this);
+    this.getAllStudents = this.getAllStudents.bind(this);
 	}
-  
+
   getAllStudents() {
   	$.ajax({
     	url: '/quiz',
       method: 'GET',
       success: function(data) {
-        console.log('data', data);
-      },
+        var student = data[0];
+        console.log(student);
+
+        this.setState({
+          firstname: student.firstname,
+          lastname: student.lastname,
+          deck: student.deck,
+          pictureUrl: student.pictureUrl
+        })
+      }.bind(this),
       error: function(err) {
       	console.error('error', err);
       }
     });
   }
-  
+
+  getAllScores() {
+    $.ajax({
+      url: '/dashboard',
+      method: 'GET',
+      success: function(data) {
+        console.log('data', data);
+      },
+      error: function(err) {
+        console.error('error', err);
+      }
+    });
+  }
+
+
   saveUserAnswer() {
   	$.ajax({
     	url: '/quiz',
@@ -40,18 +68,21 @@ class Quiz extends React.Component {
       }
     })
   }
-  
+
 	isReady() {
 		this.setState({
-			ready: true	
+			ready: true
 		});
+
+    this.getAllStudents();
+    this.getAllScores();
 	}
 
 	render() {
 		return (
 			<div id="quiz">
-				<div className="profilePic"> 
-					<p>user profile pic {dummy[2]}</p>
+				<div>
+          <img className="profilePic" src={this.state.pictureUrl}/>
 				</div>
 				<br />
 				<div>
@@ -60,7 +91,10 @@ class Quiz extends React.Component {
 							Ready?
 						</button>
 					) : (
-						<Answer dummy={dummy}/>
+						<Answer
+            firstname={this.state.firstname}
+            lastname={this.state.lastname}
+            />
 					)}
 				</div>
 			</div>

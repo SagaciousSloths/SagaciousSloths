@@ -10,7 +10,7 @@ app.use(parser.json());
 
 app.use('/', router);
 
-// app.use(express.static(__dirname + '/../client'));
+app.use(express.static(__dirname + '/../client_react/'));
 
 if (!module.parent) {
   app.listen(app.get('port'));

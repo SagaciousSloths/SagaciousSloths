@@ -5,9 +5,9 @@
 
 .profilePic {
 	background-color: #40b1f6;
-	padding: 50px;
-	width: 100px;
-	height: 100px;
+	padding: 25px;
+	width: relative;
+	height: 200px;
 	border-radius: 20px;
 	text-align: center;
 }
