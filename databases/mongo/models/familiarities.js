@@ -49,7 +49,8 @@ module.exports = {
         cardIds[card.StudentID] = card.AlgoParams;
       });
 
-      callback(cardIds);     
+      callback(cardIds);   
+         
     });
   },
 

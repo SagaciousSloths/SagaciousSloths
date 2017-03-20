@@ -103,6 +103,7 @@ exports.getQuizCards = function (cardIds, deckname) {
     // the cards not in the list are ignored.
     console.log('quiz cards:', quizCards);
     return quizCards;
+    
   });
 };
 
