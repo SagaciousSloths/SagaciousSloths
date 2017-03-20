@@ -21,6 +21,8 @@ class Quiz extends React.Component {
     this.saveUserAnswer = this.saveUserAnswer.bind(this);
   }
 
+  // adding componentDidMount
+
   componentDidMount () {
    this.getFirstStudent(); 
   }
