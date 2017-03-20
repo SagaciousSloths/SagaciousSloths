@@ -90,11 +90,11 @@ exports.getQuizCards = function (cardIds, deckname) {
 
     var quizCards = [];
       
-    console.log('@@@ cardsObject', cardsObject);
-    console.log('Deckname', deckname);
+    // console.log('@@@ cardsObject', cardsObject);
+    // console.log('Deckname', deckname);
 
     cardIds.forEach(function(cardId) {
-      console.log('cardId:', cardId);
+      // console.log('cardId:', cardId);
       if (cardsObject[cardId].deck === deckname) {
         quizCards.push(cardsObject[cardId]);
       }
