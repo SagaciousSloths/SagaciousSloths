@@ -13,7 +13,7 @@ class Quiz extends React.Component {
       firstname: '',
       lastname: '',
       deck: '',
-      pictureUrl: 'https://lh6.googleusercontent.com/uDKlK4ZoXoRxEc1-JbdzeH4eTnA_eQetXUOwqphbfaUQgkut6TRpuAa73Os6CrYHKgIKodqh9vyx1VBdCJ0LINbhZ9L8LHM_eRD1=w2560-h1398-rw'
+      pictureUrl: 'http://i.imgur.com/EAju0FG.jpg'
 		};
 		this.isReady = this.isReady.bind(this);
     this.getAllStudents = this.getAllStudents.bind(this);

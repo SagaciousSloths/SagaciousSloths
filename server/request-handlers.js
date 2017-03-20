@@ -135,14 +135,20 @@ var getDeckQuiz = function (req, res) {
     id: 'complex unique string1',
     firstname: 'J-G',
     lastname: 'Demathieu',
-    pictureUrl: 'https://lh6.googleusercontent.com/uDKlK4ZoXoRxEc1-JbdzeH4eTnA_eQetXUOwqphbfaUQgkut6TRpuAa73Os6CrYHKgIKodqh9vyx1VBdCJ0LINbhZ9L8LHM_eRD1=w2560-h1398-rw',
+    pictureUrl: 'http://i.imgur.com/EAju0FG.jpg',
     deck: 'HRSF73'
   }, {
     id: 'complex unique string2',
-    firstname: 'David',
-    lastname: 'Deng',
-    pictureUrl: 'https://drive.google.com/open?id=0B7BE9TWkUdJXOE9TaWVGdjAtZ1hmR1ZHSFFUXzhjNzRuLWVz',
-    deck: 'HRSF73'
+    firstname: 'Jeffrey',
+    lastname: 'Milberger',
+    pictureUrl: 'http://i.imgur.com/OudMPBX.jpg',
+    deck: 'HRSF72'
+  }, {
+    id: 'complex unique string3',
+    firstname: 'Kay',
+    lastname: 'Albito',
+    pictureUrl: 'http://i.imgur.com/H8eB2v5.jpg',
+    deck: 'HRSF72'
   }];
 
   res.status(200).send(quizCards);
