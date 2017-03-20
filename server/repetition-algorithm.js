@@ -6,7 +6,7 @@ const dayInMilliSeconds = 86400000;  // 1000 * 60 * 60 * 24
 algoData object:
   efactor: E-Factor value,
   interval: inter-repetition interval after the n-th repetition, in days,
-  nextquizdate: due date for next quiz,
+  nextQuizDate: due date for next quiz,
 */
 
 // TODO: general change: compute buckets in real time, when asked
@@ -15,7 +15,7 @@ exports.addCard = function () {
   var result = {
     efactor: 2.5, 
     repetition: 1, 
-    nextquizdate: Date.now(),
+    nextQuizDate: Date.now(),
   };
   return result;
 };
@@ -40,7 +40,7 @@ exports.updateFamiliarity = function (userId, cardId, quizResult) {
 
 exports.getBucket = function (algoData) {
   color = '';
-  var daysElapsed = (Date.now() - algoData.nextquizdate) / dayInMilliSeconds;
+  var daysElapsed = (Date.now() - algoData.nextQuizDate) / dayInMilliSeconds;
 
   if ( daysElapsed >= 1) { 
     return 'red';

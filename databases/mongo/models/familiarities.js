@@ -6,7 +6,9 @@ var FamiliaritySchema = mongoose.Schema({
     // Hard coded StaffID to 1 for now.
   StudentID: {type: String}, //change to datetime for Spreadsheet
   AlgoParams: {
-    bucket: {type: String, default: 'red'}
+    efactor: {type: Number, default: 2.5},
+    repetition: {type: Number, default: 1},
+    nextQuizDate: {type: Number, default: 0}
   }
 });
 
@@ -15,11 +17,14 @@ var Familiarities = mongoose.model('Familiarities', FamiliaritySchema);
 module.exports = {
 
   addFamiliarity: function (userId, cardId, algoData) {
+    // console.log('in addFamiliarity, algoData:', algoData);
     module.exports.populateDB([{
       StaffID: userId,
       StudentID: cardId,
       AlgoParams: algoData
-    }], ((result) => console.log(result))
+    }], ((result) => {
+      //console.log('Result of addFamiliarity:', result);
+    })
     );
   },
 
@@ -29,29 +34,52 @@ module.exports = {
     );
   },
 
-  getCardAlgoData: function (userId, cb) {
-    module.exports.findCard({StaffID: userId}, cb);
+  getCardIds: function (userId, callback) {
+    module.exports.findCard({StaffID: userId}, function(userCards) {
+      // console.log('in getCardIds, userCards:', userCards);
+
+      if (!userCards) {
+        return {};
+      }
+
+      let cardIds = {};
+
+      userCards.forEach(function(card) {
+        // console.log('card', card, 'card.StudentID', card.StudentID, 'Algo params:', card.AlgoParams);
+        cardIds[card.StudentID] = card.AlgoParams;
+      });
+
+      callback(cardIds);     
+    });
   },
 
   // query Familiarities from highest to lowest score for user
   // where algoData.bucket is not green
   // into ordered array of cardIds, highest red score first
-  getOrderedCardIds(userId, cb) {
+  getOrderedCardIds(userId, callback) {
   //query Familiarities for scores on all cards for the given user:
   //-> cardScores = {cardId: score, ...}, for the given user  
     module.exports.findCard(
       {StaffID: userId},
-      function(result) {
-        //result = result.sort((a, b) => b.AlgoParams.bucket - a.AlgoParams.bucket);
-        var cardScores = [];
-        result.forEach(function(cardInfo) {
-          var cardScore = {};
-          cardScore[cardInfo.StudentID] = cardInfo.AlgoParams.bucket;
-          if (cardInfo.AlgoParams.bucket !== 'green') {
-            cardScores.push(cardScore);
-          }
+      function(orderedCards) {
+        //card = card.sort((a, b) => b.AlgoParams.bucket - a.AlgoParams.bucket);
+
+        console.log('ordered card ids in familiarities:', orderedCards);
+        var orderedCardIds = orderedCards.map(function(card) {
+          console.log('card:', card);
+          return card.StudentID;
         });
-        cb(cardScores);
+
+        // var orderedCardIds = {};
+
+        // card.forEach(function(cardInfo) {
+        //   // var cardScore = {};
+        //   // cardScore[cardInfo.StudentID] = cardInfo.AlgoParams.bucket;
+        //   // if (cardInfo.AlgoParams.bucket !== 'green') {
+        //   cardScores.push(cardInfo.StudentID);
+        //   // }
+        // });
+        callback(orderedCardIds);
       }); 
       
   },
@@ -69,13 +97,13 @@ module.exports = {
         if (err) {
           return console.error(err);
         } else {
-          console.log(result);
+          // console.log(result);
           cb(result);
         }
       });
     });
   },
-  dropDB: function(cb) {
+  resetDB: function(cb) {
     Familiarities.remove({}, function(error, result) { 
       if (error) {
         console.error(error);
@@ -112,7 +140,7 @@ module.exports = {
 
 // let cb = ((result) => console.log(result));
 // let newCards = [{StudentID: 'Jeff', AlgoParams: {bucket: 'green'}}, {StudentID: 'David'}, {StudentID: 'JG'}, {StudentID: 'Kay'}];
-// module.exports.dropDB(cb);
+// module.exports.resetDB(cb);
 // module.exports.populateDB(newCards, cb);
 // module.exports.findAll(cb);
 // module.exports.getOrderedCardIds(0, cb);
