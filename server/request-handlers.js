@@ -13,39 +13,41 @@ var createFamiliarities = function(req, res) {
   // Future sprint: get current user ID and pass it as param to getUserScores
   var userId = 0;
 
-  var cards = googleSheet.getAllCards();
+  var cards = googleSheet.getAllCards(function(cards) {
+    console.log('cards:', cards);
 
-  // TESTING:
-  cards = [{
-    id: 'complex unique string1',
-    firstname: 'J-G',
-    lastname: 'Demathieu',
-    pictureUrl: 'http//jg...',
-    deck: 'HRSF74'
-  }, {
-    id: 'complex unique string2',
-    firstname: 'David',
-    lastname: 'Deng',
-    pictureUrl: 'http//david...',
-    deck: 'HRSF73'
-  }];
+    // TESTING:
+    // cards = [{
+    //   id: 'complex unique string1',
+    //   firstname: 'J-G',
+    //   lastname: 'Demathieu',
+    //   pictureUrl: 'http//jg...',
+    //   deck: 'HRSF74'
+    // }, {
+    //   id: 'complex unique string2',
+    //   firstname: 'David',
+    //   lastname: 'Deng',
+    //   pictureUrl: 'http//david...',
+    //   deck: 'HRSF73'
+    // }];
 
-  var algoData = algorithm.addCard();
+    var algoData = algorithm.addCard();
 
-  var familiarities = cards.map(function(card) {
-    return {
-      userId: userId,
-      cardId: card.id,
-      algoData: algoData
-    };
+    var familiarities = cards.map(function(card) {
+      return {
+        userId: userId,
+        cardId: card.id,
+        algoData: algoData
+      };
+    });
+
+    // Array of objects:
+    // [{userId: 0, cardId: 'complex unique string1', algoData: {TBD}},...]
+    mongo.addFamiliarities(familiarities);
+
+    // may have to reset the table
+    res.status(200).send('Reset complete: familiarities table loaded.');    
   });
-
-  // Array of objects:
-  // [{userId: 0, cardId: 'complex unique string1', algoData: {TBD}},...]
-  mongo.addFamiliarities(familiarities);
-
-  // may have to reset the table
-  res.status(200).send('Reset complete: familiarities table loaded.');
 };
 
 // GET /dashboard ----------------
@@ -55,58 +57,61 @@ var getDeckBucketCounts = function (req, res) {
   // Future sprint: get current user ID and pass it as param to getUserScores
   var userId = 0;
 
-  var cardAlgoData = mongo.getCardAlgoData(userId);
+  mongo.getCardAlgoData(userId, function(cardAlgoData) {
+    // {cardId: algoData, ...}, for the given user
 
-  // {cardId: algoData, ...}, for the given user
+    // TESTING:
+    // cardAlgoData = {
+    //   'complex unique string1': {bucket: 'red'},  // full algoData object
+    //   'complex unique string2': {bucket: 'green'},
+    // };
 
-  // TESTING:
-  cardAlgoData = {
-    'complex unique string1': {bucket: 'red'},  // full algoData object
-    'complex unique string2': {bucket: 'green'},
-  };
+    var cards = googleSheet.getAllCards(function(cards) {
+      // TESTING:
+      // cards = [ {
+      //   id: 'complex unique string1',
+      //   firstname: 'J-G',
+      //   lastname: 'Demathieu',
+      //   pictureUrl: 'http//jg...',
+      //   deck: 'HRSF74'
+      // }, {
+      //   id: 'complex unique string2',
+      //   firstname: 'David',
+      //   lastname: 'Deng',
+      //   pictureUrl: 'http//david...',
+      //   deck: 'HRSF73'
+      // }];
+      console.log('cards:', cards);
+      
 
-  var cards = googleSheet.getAllCards();
+      let results = {};
 
-  // TESTING:
-  cards = [ {
-    id: 'complex unique string1',
-    firstname: 'J-G',
-    lastname: 'Demathieu',
-    pictureUrl: 'http//jg...',
-    deck: 'HRSF74'
-  }, {
-    id: 'complex unique string2',
-    firstname: 'David',
-    lastname: 'Deng',
-    pictureUrl: 'http//david...',
-    deck: 'HRSF73'
-  }];
+      cards.forEach(function(card) {
+        let bucket;
+        let algoData;
+        if (!cardAlgoData[card.id]) {
+          // the user hasn't seen this card yet
+          algoData = algorithm.addCard();  // the initial score of any new card
+          mongo.addFamiliarity(userId, card.id, algoData);
+        } else {
+          algoData = cardAlgoData[card.id];
+        }
+        bucket = algorithm.getBucket(algoData);
 
-  let results = {};
+        if (!results[card.deck]) {
+          results[card.deck] = {red: 0, orange: 0, green: 0};  // create the deck
+        }
 
-  cards.forEach(function(card) {
-    let bucket;
-    let algoData;
-    if (!cardAlgoData[card.id]) {
-      // the user hasn't seen this card yet
-      algoData = algorithm.addCard();  // the initial score of any new card
-      mongo.addFamiliarity(userId, cardId, algoData);
-    } else {
-      algoData = cardAlgoData[card.id];
-    }
-    bucket = algorithm.getBucket(algoData);
+        results[card.deck][bucket]++;
+      });
 
-    if (!results[card.deck]) {
-      results[card.deck] = {red: 0, orange: 0, green: 0};  // create the deck
-    }
+      console.log('Deck results:', results);
 
-    results[card.deck][bucket]++;
+      res.status(200).send(results);
+      // {deckname: {red: score, orange: score, green: score}, ...}
+      
+    });    
   });
-
-  console.log('Deck results:', results);
-
-  res.status(200).send(results);
-  // {deckname: {red: score, orange: score, green: score}, ...}
 };
 
 
@@ -124,35 +129,30 @@ var getDeckQuiz = function (req, res) {
   // into ordered array of cardIds, highest red score first
   // Initial implementation: return rows with red first, then orange,
   // ignoring green rows
-  var cardIds = mongo.getOrderedCardIds(userId);
 
-  // TESTING:
-  cardIds = ['complex unique string1', 'complex unique string2'];
+  mongo.getOrderedCardIds(userId, function(cardIds) {
+    // TESTING:
+    cardIds = ['complex unique string1', 'complex unique string2'];
 
-  var quizCards = googleSheet.getQuizCards(cardIds, deckname);
+    var quizCards = googleSheet.getQuizCards(cardIds, deckname);
 
-  // TESTING:
-  quizCards = [ {
-    id: 'complex unique string1',
-    firstname: 'J-G',
-    lastname: 'Demathieu',
-    pictureUrl: 'http://i.imgur.com/EAju0FG.jpg',
-    deck: 'HRSF73'
-  }, {
-    id: 'complex unique string2',
-    firstname: 'Jeffrey',
-    lastname: 'Milberger',
-    pictureUrl: 'http://i.imgur.com/OudMPBX.jpg',
-    deck: 'HRSF72'
-  }, {
-    id: 'complex unique string3',
-    firstname: 'Kay',
-    lastname: 'Albito',
-    pictureUrl: 'http://i.imgur.com/H8eB2v5.jpg',
-    deck: 'HRSF72'
-  }];
+    // TESTING:
+    // quizCards = [ {
+    //   id: 'complex unique string1',
+    //   firstname: 'J-G',
+    //   lastname: 'Demathieu',
+    //   pictureUrl: 'https://lh6.googleusercontent.com/uDKlK4ZoXoRxEc1-JbdzeH4eTnA_eQetXUOwqphbfaUQgkut6TRpuAa73Os6CrYHKgIKodqh9vyx1VBdCJ0LINbhZ9L8LHM_eRD1=w2560-h1398-rw',
+    //   deck: 'HRSF73'
+    // }, {
+    //   id: 'complex unique string2',
+    //   firstname: 'David',
+    //   lastname: 'Deng',
+    //   pictureUrl: 'https://drive.google.com/open?id=0B7BE9TWkUdJXOE9TaWVGdjAtZ1hmR1ZHSFFUXzhjNzRuLWVz',
+    //   deck: 'HRSF73'
+    // }];
 
-  res.status(200).send(quizCards);
+    res.status(200).send(quizCards);
+  });
 };
 
 

@@ -7,13 +7,12 @@ var url = 'https://sheets.googleapis.com/v4/spreadsheets/';
 var spreadsheetId = '1T-tnJlfiqUyQZMEJe9W-d6OKg5vVchhjn_L7ffIXyyI';
 // https://docs.google.com/spreadsheets/d/1T-tnJlfiqUyQZMEJe9W-d6OKg5vVchhjn_L7ffIXyyI/edit?usp=sharing
 
-var query = '/values:batchGet?majorDimension=ROWS&ranges=B2%3AD5&valueRenderOption=FORMATTED_VALUE&key=';
-var httpGet;
+var query = '/values:batchGet?majorDimension=ROWS&ranges=B2%3AE100&valueRenderOption=FORMATTED_VALUE&key=';
 
 exports.quiz = {
   get: function (req, res) {
     console.log('In G. get');
-    httpGet(function(parsedData) {
+    exports.getAllCards(function(parsedData) {
       // Use date as unique ID - change similar dates
       // console.log('Success, in quizzes func! Data:', parsedData);
       var students = parsedData.valueRanges[0].values;
@@ -23,15 +22,7 @@ exports.quiz = {
   },
 };
 
-exports.getAllCards = function () {};
-
-// not needed: exports.getAllCardIds = function () {};
-
-exports.getQuizCards = function (cardIds, deckname) {};
-
-
-//----------- Helper functions ------------
-httpGet = function (callback) {
+exports.getAllCards = function (callback) {
   query = url + spreadsheetId + query + API_KEY;
   console.log('query', query);
 
@@ -60,8 +51,20 @@ httpGet = function (callback) {
     res.on('end', () => {
       try {
         let parsedData = JSON.parse(rawData);
-        // console.log('parsedData = ', parsedData);
-        callback(parsedData);
+        parsedData = parsedData.valueRanges[0].values;
+        console.log('parsedData = ', parsedData);
+
+        var result = [];
+        parsedData.forEach(function(elem) {
+          var card = {};
+          card.id = elem[0] + elem[1];
+          card.firstname = elem[0];
+          card.lastname = elem[1];
+          card.pictureUrl = elem[2];
+          card.deck = elem[3];
+          result.push(card);
+        });
+        callback(result);
 
       } catch (e) {
         console.log(e.message);
@@ -71,6 +74,12 @@ httpGet = function (callback) {
     console.log(`Got error: ${e.message}`);
   });  
 };
+
+// not needed: exports.getAllCardIds = function () {};
+
+exports.getQuizCards = function (cardIds, deckname) {};
+
+
 
 
 
