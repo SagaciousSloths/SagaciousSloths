@@ -16,8 +16,8 @@ var createFamiliarities = function(req, res) {
   var cards = googleSheet.getAllCards();
 
   // TESTING:
-  cards = [ {
-    id: 'complex unique string1', 
+  cards = [{
+    id: 'complex unique string1',
     firstname: 'J-G',
     lastname: 'Demathieu',
     pictureUrl: 'http//jg...',
@@ -30,19 +30,19 @@ var createFamiliarities = function(req, res) {
     deck: 'HRSF73'
   }];
 
-  var algoData = algorithm.addCard(); 
+  var algoData = algorithm.addCard();
 
   var familiarities = cards.map(function(card) {
     return {
       userId: userId,
       cardId: card.id,
       algoData: algoData
-    };  
+    };
   });
-  
+
   // Array of objects:
   // [{userId: 0, cardId: 'complex unique string1', algoData: {TBD}},...]
-  mongo.addFamiliarities(familiarities);  
+  mongo.addFamiliarities(familiarities);
 
   // may have to reset the table
   res.status(200).send('Reset complete: familiarities table loaded.');
@@ -51,13 +51,13 @@ var createFamiliarities = function(req, res) {
 // GET /dashboard ----------------
 var getDeckBucketCounts = function (req, res) {
   // Buckets are: 'red', 'orange' and 'green'
-  
+
   // Future sprint: get current user ID and pass it as param to getUserScores
   var userId = 0;
 
-  var cardAlgoData = mongo.getCardAlgoData(userId);  
+  var cardAlgoData = mongo.getCardAlgoData(userId);
 
-  // {cardId: algoData, ...}, for the given user 
+  // {cardId: algoData, ...}, for the given user
 
   // TESTING:
   cardAlgoData = {
@@ -69,7 +69,7 @@ var getDeckBucketCounts = function (req, res) {
 
   // TESTING:
   cards = [ {
-    id: 'complex unique string1', 
+    id: 'complex unique string1',
     firstname: 'J-G',
     lastname: 'Demathieu',
     pictureUrl: 'http//jg...',
@@ -99,14 +99,14 @@ var getDeckBucketCounts = function (req, res) {
       results[card.deck] = {red: 0, orange: 0, green: 0};  // create the deck
     }
 
-    results[card.deck][bucket]++; 
+    results[card.deck][bucket]++;
   });
 
   console.log('Deck results:', results);
-   
+
   res.status(200).send(results);
   // {deckname: {red: score, orange: score, green: score}, ...}
-}; 
+};
 
 
 // GET /quiz/:deckname -------------------
@@ -132,10 +132,10 @@ var getDeckQuiz = function (req, res) {
 
   // TESTING:
   quizCards = [ {
-    id: 'complex unique string1', 
+    id: 'complex unique string1',
     firstname: 'J-G',
     lastname: 'Demathieu',
-    pictureUrl: 'https://drive.google.com/open?id=0B7BE9TWkUdJXaExxWTJRdXdTdkk',
+    pictureUrl: 'https://lh6.googleusercontent.com/uDKlK4ZoXoRxEc1-JbdzeH4eTnA_eQetXUOwqphbfaUQgkut6TRpuAa73Os6CrYHKgIKodqh9vyx1VBdCJ0LINbhZ9L8LHM_eRD1=w2560-h1398-rw',
     deck: 'HRSF73'
   }, {
     id: 'complex unique string2',
