@@ -33,32 +33,39 @@ describe('server', function() {
     });
   });
 
-  it('should accept POST requests to /quiz', function(done) {
-    var requestParams = {method: 'POST',
-      uri: 'http://127.0.0.1:3000/quiz',
-      json: [{
-        firstname: 'J-G',
-        lastname: 'Demathieu',
-        pictureUrl: 'https://drive.google.com/open?id=0B7BE9TWkUdJXOE9TaWVGdjAtZ1hmR1ZHSFFUXzhjNzRuLWVz'
-      }]
-    };
+  // it('should accept POST requests to /quiz', function(done) {
+  //   var requestParams = {method: 'POST',
+  //     uri: 'http://127.0.0.1:3000/quiz',
+  //     json: [{
+  //       firstname: 'J-G',
+  //       lastname: 'Demathieu',
+  //     }]
+  //   };
 
-    request(requestParams, function(error, response, body) {
-      expect(response.statusCode).to.equal(201);
-      done();
-    });
-  });
+  //   request(requestParams, function(error, response, body) {
+  //     expect(response.statusCode).to.equal(201);
+  //     done();
+  //   });
+  // });
 
-  it('should respond with messages that were previously posted', function(done) {
-    var requestParams = {method: 'POST',
-      uri: 'http://127.0.0.1:3000/quiz',
-      json: [{
-        firstname: 'J-G',
-        lastname: 'Demathieu',
-        pictureUrl: 'https://drive.google.com/open?id=0B7BE9TWkUdJXOE9TaWVGdjAtZ1hmR1ZHSFFUXzhjNzRuLWVz'
-      }]
-    };
-  });
+  // it('should respond with messages that were previously posted', function(done) {
+  //   var requestParams = {method: 'POST',
+  //     uri: 'http://127.0.0.1:3000/quiz',
+  //     json: [{
+  //       firstname: 'J-G',
+  //       lastname: 'Demathieu',
+  //     }]
+  //   };
+
+  //   request(requestParams, function(error, response, body) {
+  //     request('http://127.0.0.1:3000/quiz', function(error, response, body) {
+  //       var parsedBody = JSON.parse(body);
+  //       expect(parsedBody[0].firstname).to.equal('J-G');
+  //       expect(parsedBody[0].lastname).to.equal('Demathieu');
+  //       done();
+  //     });
+  //   });
+  // });
 
   it('Should 404 when asked for a nonexistent endpoint', function(done) {
     request('http://127.0.0.1:3000/iPreferAnki', function(error, response, body) {
