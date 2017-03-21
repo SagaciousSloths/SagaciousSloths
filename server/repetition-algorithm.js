@@ -32,7 +32,8 @@ exports.updateFamiliarity = function (userId, cardId, quizResult) {
   algoData = algorithm.addCard();
 
   if (quizResult === 'nope') {
-  // if algoData.nextquizdate
+  // if algoData.nextquizdate in the past, keep it there
+  // it should go from orange to red
   }
 
 };
@@ -52,6 +53,7 @@ exports.getBucket = function (algoData) {
 };
 
 exports.getQuizDateThreshhold = function() {
+  // Date under which a card should be put in the quiz
   return Date.now();
 };
 

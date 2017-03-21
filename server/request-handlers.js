@@ -63,24 +63,18 @@ var getDeckBucketCounts = function (req, res) {
     //   'complex unique string2': {algoData},
     // };
 
-    console.log('received from Mongoose getCardIds:', cardIds);
+    // console.log('received from Mongoose getCardIds:', cardIds);
 
     var cards = googleSheet.getAllCards(function(cards) {
-      // TESTING:
       // cards = [ {
       //   id: 'complex unique string1',
       //   firstname: 'J-G',
       //   lastname: 'Demathieu',
       //   pictureUrl: 'http//jg...',
       //   deck: 'HRSF74'
-      // }, {
-      //   id: 'complex unique string2',
-      //   firstname: 'David',
-      //   lastname: 'Deng',
-      //   pictureUrl: 'http//david...',
-      //   deck: 'HRSF73'
-      // }];
-      console.log('cards:', cards);
+      // },..];
+      
+      // console.log('cards:', cards);
       
 
       let results = {};
@@ -94,7 +88,7 @@ var getDeckBucketCounts = function (req, res) {
           algoData = algorithm.addCard();  // the initial score of any new card
           mongo.addFamiliarity(userId, card.id, algoData);
         } else {
-          console.log('Familiar card!');
+          // console.log('Familiar card!');
           algoData = cardIds[card.id];
         }
         bucket = algorithm.getBucket(algoData);
@@ -106,7 +100,7 @@ var getDeckBucketCounts = function (req, res) {
         results[card.deck][bucket]++;
       });
 
-      console.log('Deck results:', results);
+      // console.log('Deck results:', results);
 
       res.status(200).send(results);
       // {deckname: {red: score, orange: score, green: score}, ...}
@@ -132,7 +126,7 @@ var getDeckQuiz = function (req, res) {
   // ignoring green rows
 
   mongo.getOrderedCardIds(userId, function(orderedCardIds) {
-    console.log('ordered cardIds in getDeckQuiz:', orderedCardIds);
+    // console.log('ordered cardIds in getDeckQuiz:', orderedCardIds);
     // TESTING:
     // cardIds = ['complex unique string1', 'complex unique string2': '1'];
 
