@@ -1,7 +1,41 @@
 var request = require('request');
 var expect = require('chai').expect;
 
-describe('server', function() {
+describe('dashboard GET', function() {
+  it('should respond to GET requests for /dashboard with a 200 status code', function(done) {
+    request('http://127.0.0.1:3000/dashboard', function(error, response, body) {
+      expect(response.statusCode).to.equal(200);
+      done();
+    });
+  });
+
+  it('should send back parsable stringified JSON', function(done) {
+    request('http://127.0.0.1:3000/dashboard', function(error, response, body) {
+      expect(JSON.parse.bind(this, body)).to.not.throw();
+      done();
+    });
+  });
+
+  it('should send back an object', function(done) {
+    request('http://127.0.0.1:3000/dashboard', function(error, response, body) {
+      var parsedBody = JSON.parse(body);
+      expect(parsedBody).to.be.an('object');
+      done();
+    });
+  });
+
+  it('should send an object containing objects', function(done) {
+    request('http://127.0.0.1:3000/dashboard', function(error, response, body) {
+      var parsedBody = JSON.parse(body);
+      expect(parsedBody).to.be.an('object');
+      var keys = Object.keys(parsedBody);
+      expect(parsedBody[keys[0]]).to.be.an('object');
+      done();
+    });
+  });
+});
+
+describe('quiz GET', function() {
   it('should respond to GET requests for /quiz with a 200 status code', function(done) {
     request('http://127.0.0.1:3000/quiz', function(error, response, body) {
       expect(response.statusCode).to.equal(200);
@@ -32,6 +66,16 @@ describe('server', function() {
       done();
     });
   });
+
+
+  it('Should 404 when asked for a nonexistent endpoint', function(done) {
+    request('http://127.0.0.1:3000/iPreferAnki', function(error, response, body) {
+      expect(response.statusCode).to.equal(404);
+      done();
+    });
+  });
+});
+
 
   // it('should accept POST requests to /quiz', function(done) {
   //   var requestParams = {method: 'POST',
@@ -65,12 +109,4 @@ describe('server', function() {
   //       done();
   //     });
   //   });
-  // });
-
-  it('Should 404 when asked for a nonexistent endpoint', function(done) {
-    request('http://127.0.0.1:3000/iPreferAnki', function(error, response, body) {
-      expect(response.statusCode).to.equal(404);
-      done();
-    });
-  });
-});
+  // })
