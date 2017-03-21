@@ -116,24 +116,6 @@ class Quiz extends React.Component {
     })
   } 
 
-//Object.keys(data)
-
-// {        
-//     this.props.restaurants.map((restaurant) => {
-//       const selectRestaurant = this.selectRestaurant.bind(this, restaurant);
-//       const isSelected = this.isSelected.bind(this, restaurant);
-//       return (
-//         <button 
-//           className="restaurantButtons"
-//           key={restaurant}
-//           onClick={selectRestaurant}
-//           disabled={isSelected()}
-//         >
-//           {this.selectedIndex(restaurant)} {restaurant}
-//         </button>);
-//     })
-//   }
-
   render() {
     return (
     this.state.page === 'dashboard' ? (
