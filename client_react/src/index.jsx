@@ -15,7 +15,7 @@ class Quiz extends React.Component {
       deck: '',
       pictureUrl: '',
       page: 'dashboard',
-      cohortList: ''
+      cohortList: []
     };
     this.isReady = this.isReady.bind(this);
     this.getFirstStudent = this.getFirstStudent.bind(this);
@@ -30,7 +30,8 @@ class Quiz extends React.Component {
     this.getFirstStudent();
     axios.get('/dashboard')
     .then(function (response) {
-      var cohortList = Object.keys(response.data);
+      var cohortList = Object.keys(response.data).sort();
+      // finalize sorting function .sort();
       _this.setState({
         cohortList: cohortList
       });
@@ -118,25 +119,34 @@ class Quiz extends React.Component {
 
   render() {
     return (
-    this.state.page === 'dashboard' ? (
-      <button onClick={this.changePageToQuiz} className="cohortButton"> { } </button>
+      <div> 
+      {this.state.page === 'dashboard' ? (
+        <div>
+          {this.state.cohortList.map((cohort, index) => {
+            return (
+              <button key={index} onClick={this.changePageToQuiz} className="cohortButton">{cohort}</button>
+            )
+          })}
+        </div>
       ) : (
-      <div id="quiz">
-        <div>
-          <img className="profilePic" src={this.state.pictureUrl}/>
+        <div id="quiz">
+          <div>
+            <img className="profilePic" src={this.state.pictureUrl}/>
+          </div>
+          <br />
+          <div>
+            {!this.state.ready ? (
+                <button onClick={this.isReady} className="readyButton">
+                  Ready?
+                </button>
+              ) : (
+                <Answer firstname={this.state.firstname} lastname={this.state.lastname} saveUserAnswer={this.saveUserAnswer} /> 
+              )
+            }
+          </div>
         </div>
-        <br />
-        <div>
-          {!this.state.ready ? (
-            <button onClick={this.isReady} className="readyButton">
-              Ready?
-            </button>
-          ) : (
-            <Answer firstname={this.state.firstname} lastname={this.state.lastname} saveUserAnswer={this.saveUserAnswer} />
-          )}
-        </div>
+      )}  
       </div>
-      )
     )
   }
 }
