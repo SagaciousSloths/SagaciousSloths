@@ -78,7 +78,21 @@ module.exports = {
 
         callback(orderedCardIds);
       }); 
-      
+  },
+
+  getAlgoParams(userId, cardId, callback) {
+    module.exports.findCard(
+      {StaffID: userId, StudentID: cardId},
+      function(card) {
+
+        console.log('getAlgoParams in familiarities:', card);
+
+        if (card) {
+          callback(card.AlgoParams);
+        } else {
+          callback();
+        }
+      }); 
   },
 
   populateDB: function(newCards, cb) {
