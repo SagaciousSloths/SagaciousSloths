@@ -24,7 +24,7 @@ var sheetRange = '/values:batchGet?majorDimension=ROWS&ranges=B2%3AE100&valueRen
 
 exports.getAllCards = function (callback) {
   let query = url + spreadsheetId + sheetRange + API_KEY;
-  console.log('query', query);
+  // console.log('query', query);
 
   https.get(query, (res) => {
     const statusCode = res.statusCode;
@@ -80,7 +80,7 @@ exports.getAllCards = function (callback) {
 exports.getQuizCards = function (cardIds, deckname, callback) {
   exports.getAllCards(function(cards) {
 
-    console.log('All cards in sheets:', cards);
+    // console.log('All cards in sheets:', cards);
 
     // create keys for fast lookup
     var cardsObject = {};

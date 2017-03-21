@@ -17,13 +17,13 @@ var Familiarities = mongoose.model('Familiarities', FamiliaritySchema);
 module.exports = {
 
   addFamiliarity: function (userId, cardId, algoData) {
-    // console.log('in addFamiliarity, algoData:', algoData);
+    console.log('in addFamiliarity, algoData:', algoData);
     module.exports.populateDB([{
       StaffID: userId,
       StudentID: cardId,
       AlgoParams: algoData
     }], ((result) => {
-      //console.log('Result of addFamiliarity:', result);
+      console.log('Result of addFamiliarity:', result);
     })
     );
   },
@@ -51,7 +51,7 @@ module.exports = {
       let cardIds = {};
 
       userCards.forEach(function(card) {
-        // console.log('card', card, 'card.StudentID', card.StudentID, 'Algo params:', card.AlgoParams);
+        console.log('card', card, 'card.StudentID', card.StudentID, 'Algo params:', card.AlgoParams);
         cardIds[card.StudentID] = card.AlgoParams;
       });
 
@@ -78,7 +78,29 @@ module.exports = {
 
         callback(orderedCardIds);
       }); 
-      
+  },
+
+  getAlgoParams(userId, cardId, callback) {
+    module.exports.findCard(
+      {StaffID: userId, StudentID: cardId},
+      function(card) {
+
+        console.log('getAlgoParams in familiarities:', card);
+
+        if (card.length > 1) {
+          console.error('Logic error: multiple cards found for same user-card pair, using the first');
+        }
+
+        if (card) {
+          callback(card[0].AlgoParams);
+        } else {
+          callback();
+        }
+      }); 
+  },
+
+  setAlgoParams(userId, cardId, algoParams, callback) {
+    // Jeff: TODO!
   },
 
   populateDB: function(newCards, cb) {
