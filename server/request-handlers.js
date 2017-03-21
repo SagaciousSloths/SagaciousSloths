@@ -136,25 +136,25 @@ var getDeckQuiz = function (req, res) {
     // TESTING:
     // cardIds = ['complex unique string1', 'complex unique string2': '1'];
 
-    var quizCards = googleSheet.getQuizCards(orderedCardIds, deckname);
+    googleSheet.getQuizCards(orderedCardIds, deckname, function(quizCards) {
+      // TESTING:
+      // quizCards = [ {
+      //   id: 'complex unique string1',
+      //   firstname: 'J-G',
+      //   lastname: 'Demathieu',
+      //   pictureUrl: 'https://lh6.googleusercontent.com/uDKlK4ZoXoRxEc1-JbdzeH4eTnA_eQetXUOwqphbfaUQgkut6TRpuAa73Os6CrYHKgIKodqh9vyx1VBdCJ0LINbhZ9L8LHM_eRD1=w2560-h1398-rw',
+      //   deck: 'HRSF73'
+      // }, {
+      //   id: 'complex unique string2',
+      //   firstname: 'David',
+      //   lastname: 'Deng',
+      //   pictureUrl: 'https://drive.google.com/open?id=0B7BE9TWkUdJXOE9TaWVGdjAtZ1hmR1ZHSFFUXzhjNzRuLWVz',
+      //   deck: 'HRSF73'
+      // }];
 
-    // TESTING:
-    // quizCards = [ {
-    //   id: 'complex unique string1',
-    //   firstname: 'J-G',
-    //   lastname: 'Demathieu',
-    //   pictureUrl: 'https://lh6.googleusercontent.com/uDKlK4ZoXoRxEc1-JbdzeH4eTnA_eQetXUOwqphbfaUQgkut6TRpuAa73Os6CrYHKgIKodqh9vyx1VBdCJ0LINbhZ9L8LHM_eRD1=w2560-h1398-rw',
-    //   deck: 'HRSF73'
-    // }, {
-    //   id: 'complex unique string2',
-    //   firstname: 'David',
-    //   lastname: 'Deng',
-    //   pictureUrl: 'https://drive.google.com/open?id=0B7BE9TWkUdJXOE9TaWVGdjAtZ1hmR1ZHSFFUXzhjNzRuLWVz',
-    //   deck: 'HRSF73'
-    // }];
-
-    res.status(200).send(quizCards);
-    
+      res.status(200).send(quizCards);
+      
+    });    
   });
 };
 
