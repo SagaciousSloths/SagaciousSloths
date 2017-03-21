@@ -119,13 +119,14 @@ var updateUserCardFamiliarity = function (req, res) {
   // Future sprint: get current user ID and pass it as param to getUserScores
   var userId = 0;
 
-  var cardID;
+  var id;
   var quizResult;
-  ({cardId, quizResult} = req.body());
+  console.log('Req body is:', req.body);
+  ({id, quizResult} = req.body);
 
-  console.log('in handler, update cardId', cardId, 'quiz res', quizResult);
+  console.log('in handler, update car id:', id, '  quiz res:', quizResult);
 
-  algorithm.updateFamiliarity(userId, cardId, quizResult);
+  algorithm.updateFamiliarity(userId, id, quizResult);
 
   res.status(201).send('Updated card-user data');
 };
