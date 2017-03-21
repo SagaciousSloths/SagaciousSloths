@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Answer from './components/Answer.jsx';
 import $ from 'jquery';
+import axios from 'axios';
 
 class Quiz extends React.Component {
   constructor(props) {
@@ -13,7 +14,8 @@ class Quiz extends React.Component {
       lastname: '',
       deck: '',
       pictureUrl: '',
-      page: 'dashboard'
+      page: 'dashboard',
+      cohortList: ''
     };
     this.isReady = this.isReady.bind(this);
     this.getFirstStudent = this.getFirstStudent.bind(this);
@@ -24,7 +26,15 @@ class Quiz extends React.Component {
   }
 
   componentDidMount () {
-   this.getFirstStudent(); 
+    var _this = this;
+    this.getFirstStudent();
+    axios.get('/dashboard')
+    .then(function (response) {
+      var cohortList = Object.keys(response.data);
+      _this.setState({
+        cohortList: cohortList
+      });
+    })
   }
 
   getFirstStudent() {
@@ -106,10 +116,28 @@ class Quiz extends React.Component {
     })
   } 
 
+//Object.keys(data)
+
+// {        
+//     this.props.restaurants.map((restaurant) => {
+//       const selectRestaurant = this.selectRestaurant.bind(this, restaurant);
+//       const isSelected = this.isSelected.bind(this, restaurant);
+//       return (
+//         <button 
+//           className="restaurantButtons"
+//           key={restaurant}
+//           onClick={selectRestaurant}
+//           disabled={isSelected()}
+//         >
+//           {this.selectedIndex(restaurant)} {restaurant}
+//         </button>);
+//     })
+//   }
+
   render() {
     return (
     this.state.page === 'dashboard' ? (
-      <button onClick={this.changePageToQuiz} className="cohortButton"> hrsf73 </button>
+      <button onClick={this.changePageToQuiz} className="cohortButton"> { } </button>
       ) : (
       <div id="quiz">
         <div>
