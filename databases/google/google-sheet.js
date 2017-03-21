@@ -77,7 +77,7 @@ exports.getAllCards = function (callback) {
 
 // not needed: exports.getAllCardIds = function () {};
 
-exports.getQuizCards = function (cardIds, deckname) {
+exports.getQuizCards = function (cardIds, deckname, callback) {
   exports.getAllCards(function(cards) {
 
     console.log('All cards in sheets:', cards);
@@ -101,8 +101,8 @@ exports.getQuizCards = function (cardIds, deckname) {
     });
 
     // the cards not in the list are ignored.
-    console.log('quiz cards:', quizCards);
-    return quizCards;
+    // console.log('quiz cards:', quizCards);
+    callback(quizCards);
     
   });
 };

@@ -34,7 +34,13 @@ module.exports = {
     );
   },
 
+
   getCardIds: function (userId, callback) {
+    // Return: cardIds = {
+    //   'complex unique string1': {algoData},  // full algoData object
+    //   'complex unique string2': {algoData},
+    // };
+    
     module.exports.findCard({StaffID: userId}, function(userCards) {
       // console.log('in getCardIds, userCards:', userCards);
 
@@ -54,12 +60,11 @@ module.exports = {
     });
   },
 
-  // query Familiarities from highest to lowest score for user
-  // where algoData.bucket is not green
-  // into ordered array of cardIds, highest red score first
+
   getOrderedCardIds(userId, callback) {
-  //query Familiarities for scores on all cards for the given user:
-  //-> cardScores = {cardId: score, ...}, for the given user  
+  //return an ordered array of userIds, from smallest (= earliest) nextQuizDate to largest
+  // TODO: ask algo for limit on nextQuizDate for 'green'
+
     module.exports.findCard(
       {StaffID: userId},
       function(orderedCards) {
@@ -71,15 +76,6 @@ module.exports = {
           return card.StudentID;
         });
 
-        // var orderedCardIds = {};
-
-        // card.forEach(function(cardInfo) {
-        //   // var cardScore = {};
-        //   // cardScore[cardInfo.StudentID] = cardInfo.AlgoParams.bucket;
-        //   // if (cardInfo.AlgoParams.bucket !== 'green') {
-        //   cardScores.push(cardInfo.StudentID);
-        //   // }
-        // });
         callback(orderedCardIds);
       }); 
       
