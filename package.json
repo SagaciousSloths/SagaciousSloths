@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "Memoscript",
   "version": "",
   "description": "",
   "author": "",
@@ -8,7 +8,8 @@
     "node": ">=6.4.0"
   },
   "scripts": {
-    "start": "nodemon server/index.js",
+    "start": "node server/index.js",
+    "start-dev": "nodemon server/index.js",
     "react-dev": "webpack -d --watch",
     "db": "mongod",
     "bkgrnd-db": "sudo mongod --fork --logpath /var/log/mongodb.log",
