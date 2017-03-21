@@ -70,9 +70,9 @@ module.exports = {
       function(orderedCards) {
         //card = card.sort((a, b) => b.AlgoParams.bucket - a.AlgoParams.bucket);
 
-        console.log('ordered card ids in familiarities:', orderedCards);
+        // console.log('ordered card ids in familiarities:', orderedCards);
         var orderedCardIds = orderedCards.map(function(card) {
-          console.log('card:', card);
+          // console.log('card:', card);
           return card.StudentID;
         });
 

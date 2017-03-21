@@ -32,14 +32,14 @@ var getDeckBucketCounts = function (req, res) {
       //   deck: 'HRSF74'
       // },..];
       
-      console.log('cards:', cards);
+      //console.log('cards:', cards);
       
 
       let results = {};
 
       cards.forEach(function(card) {
 
-        console.log('in foreach of getDeckBucketCounts, card:', card);
+        // console.log('in foreach of getDeckBucketCounts, card:', card);
         let bucket;
         let algoData;
 
@@ -72,8 +72,7 @@ var getDeckBucketCounts = function (req, res) {
 // GET /quiz/:deckname -------------------
 var getDeckQuiz = function (req, res) {
 
-  // TODO: find out where the last part of the path is in req
-  var deckname = 'SF72';  // for TESTING
+  var deckname = req.query.deck;  
 
   // Future sprint: get current user ID and pass it as param to getUserScores
   var userId = 0;
@@ -88,6 +87,7 @@ var getDeckQuiz = function (req, res) {
     // console.log('ordered cardIds in getDeckQuiz:', orderedCardIds);
     // TESTING:
     // cardIds = ['complex unique string1', 'complex unique string2': '1'];
+    console.log('OrderedCardIds received from mongo:', orderedCardIds);
 
     googleSheet.getQuizCards(orderedCardIds, deckname, function(quizCards) {
       // TESTING:
@@ -104,6 +104,8 @@ var getDeckQuiz = function (req, res) {
       //   pictureUrl: 'https://drive.google.com/open?id=0B7BE9TWkUdJXOE9TaWVGdjAtZ1hmR1ZHSFFUXzhjNzRuLWVz',
       //   deck: 'HRSF73'
       // }];
+
+      console.log('@@@@@@@@@ Sending to React the cards:', quizCards);
 
       res.status(200).send(quizCards);
       

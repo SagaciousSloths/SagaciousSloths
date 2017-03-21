@@ -69,7 +69,7 @@ exports.updateFamiliarity = function (userId, cardId, quizResult) {
       updateEfactor(algoParams, 0.5);  // see note for 'nope' case
       console.log('ALMOST Card, setting algoParams:', algoParams);
 
-    } else if (quizResult === 'gotit') {
+    } else if (quizResult === 'got it') {
       if (algoParams.repetition === 0) {
         //algoParams.eFactor = 2.5;
         algoParams.repetition = 1;
