@@ -6,49 +6,7 @@ var algorithm = require('./repetition-algorithm');
   // NOTE: mongo structure:
   //   userId, cardId, algoData (an object) {bucket: 'red/orange/green'}
 
-// Creates the initial Mongo Familiarities table 
-// NOT NEEDED: can build it through the initial call to /dashboard
-// based on a Google spreadsheet of names
-// var createFamiliarities = function(req, res) {
-//   // Future sprint: get current user ID and pass it as param to getUserScores
-//   var userId = 0;
 
-//   var cards = googleSheet.getAllCards(function(cards) {
-//     console.log('cards:', cards);
-
-//     // TESTING:
-//     // cards = [{
-//     //   id: 'complex unique string1',
-//     //   firstname: 'J-G',
-//     //   lastname: 'Demathieu',
-//     //   pictureUrl: 'http//jg...',
-//     //   deck: 'HRSF74'
-//     // }, {
-//     //   id: 'complex unique string2',
-//     //   firstname: 'David',
-//     //   lastname: 'Deng',
-//     //   pictureUrl: 'http//david...',
-//     //   deck: 'HRSF73'
-//     // }];
-
-//     var algoData = algorithm.addCard();
-
-//     var familiarities = cards.map(function(card) {
-//       return {
-//         userId: userId,
-//         cardId: card.id,
-//         algoData: algoData
-//       };
-//     });
-
-//     // Array of objects:
-//     // [{userId: 0, cardId: 'complex unique string1', algoData: {TBD}},...]
-//     mongo.addFamiliarities(familiarities);
-
-//     // may have to reset the table
-//     res.status(200).send('Reset complete: familiarities table loaded.');    
-//   });
-// };
 
 // GET /dashboard ----------------
 var getDeckBucketCounts = function (req, res) {
@@ -63,7 +21,7 @@ var getDeckBucketCounts = function (req, res) {
     //   'complex unique string2': {algoData},
     // };
 
-    // console.log('received from Mongoose getCardIds:', cardIds);
+    console.log('received from Mongoose getCardIds:', cardIds);
 
     var cards = googleSheet.getAllCards(function(cards) {
       // cards = [ {
@@ -85,8 +43,7 @@ var getDeckBucketCounts = function (req, res) {
 
         if (!cardIds[card.id]) {
           // the user hasn't seen this card yet
-          algoData = algorithm.addCard();  // the initial score of any new card
-          mongo.addFamiliarity(userId, card.id, algoData);
+          algorithm.addFamiliarity(userId, card.id);
         } else {
           // console.log('Familiar card!');
           algoData = cardIds[card.id];
@@ -100,7 +57,7 @@ var getDeckBucketCounts = function (req, res) {
         results[card.deck][bucket]++;
       });
 
-      // console.log('Deck results:', results);
+      console.log('Deck results:', results);
 
       res.status(200).send(results);
       // {deckname: {red: score, orange: score, green: score}, ...}
@@ -189,3 +146,49 @@ module.exports = {
     card: updateUserCardFamiliarity,
   }
 };
+
+
+
+// Creates the initial Mongo Familiarities table 
+// NOT NEEDED: can build it through the initial call to /dashboard
+// based on a Google spreadsheet of names
+// var createFamiliarities = function(req, res) {
+//   // Future sprint: get current user ID and pass it as param to getUserScores
+//   var userId = 0;
+
+//   var cards = googleSheet.getAllCards(function(cards) {
+//     console.log('cards:', cards);
+
+//     // TESTING:
+//     // cards = [{
+//     //   id: 'complex unique string1',
+//     //   firstname: 'J-G',
+//     //   lastname: 'Demathieu',
+//     //   pictureUrl: 'http//jg...',
+//     //   deck: 'HRSF74'
+//     // }, {
+//     //   id: 'complex unique string2',
+//     //   firstname: 'David',
+//     //   lastname: 'Deng',
+//     //   pictureUrl: 'http//david...',
+//     //   deck: 'HRSF73'
+//     // }];
+
+//     var algoData = algorithm.addCard();
+
+//     var familiarities = cards.map(function(card) {
+//       return {
+//         userId: userId,
+//         cardId: card.id,
+//         algoData: algoData
+//       };
+//     });
+
+//     // Array of objects:
+//     // [{userId: 0, cardId: 'complex unique string1', algoData: {TBD}},...]
+//     mongo.addFamiliarities(familiarities);
+
+//     // may have to reset the table
+//     res.status(200).send('Reset complete: familiarities table loaded.');    
+//   });
+// };

@@ -11,7 +11,7 @@ algoData object:
 
 // TODO: general change: compute buckets in real time, when asked
 
-exports.addCard = function () {
+var getNewParams = function () {
   var result = {
     efactor: 2.5, 
     repetition: 1, 
@@ -20,21 +20,32 @@ exports.addCard = function () {
   return result;
 };
 
-// Update algoData after a quiz
+exports.addFamiliarity = function (userId, cardId) {
+  var algoParams = getNewParams();
+  mongo.addFamiliarity(userId, cardId, algoParams);
+  return algoParams;
+};
+
+// Update algoParams after a quiz on a card
 exports.updateFamiliarity = function (userId, cardId, quizResult) {
   
   // Testing
   cardId = 'complex unique string1';
   quizResult = 'almost';
 
-  var algoData = mongo.getAlgoData(userId, cardId);
-  // Testing, to remove:
-  algoData = algorithm.addCard();
+  var algoParams = mongo.getAlgoData(userId, cardId, function(algoParams) {
+    // Testing, to remove:
+    if (!algoParams) {
+      console.log('Card not found in Familiarities, for update. userId:', userId, 'cardId:', cardId);
+      algoParams = exports.addFamiliarity(userId, card.id);
+    }
 
-  if (quizResult === 'nope') {
-  // if algoData.nextquizdate in the past, keep it there
-  // it should go from orange to red
-  }
+    if (quizResult === 'nope') {
+      // if (algoParams.)
+    // if algoParams.nextquizdate in the past, keep it there
+    // it should go from orange to red
+    }    
+  });
 
 };
 
