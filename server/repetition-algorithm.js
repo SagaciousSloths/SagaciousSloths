@@ -86,7 +86,9 @@ exports.updateFamiliarity = function (userId, cardId, quizResult) {
     }
 
     // TODO: update the database record for the user! 
-    
+    mongo.setAlgoParams(userId, cardId, algoParams, function(res) {
+      console.log('In algo, after setting algo params, res from mongo:', res);
+    });
   });
 };
 
