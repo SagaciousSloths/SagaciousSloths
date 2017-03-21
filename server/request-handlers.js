@@ -32,18 +32,20 @@ var getDeckBucketCounts = function (req, res) {
       //   deck: 'HRSF74'
       // },..];
       
-      // console.log('cards:', cards);
+      console.log('cards:', cards);
       
 
       let results = {};
 
       cards.forEach(function(card) {
+
+        console.log('in foreach of getDeckBucketCounts, card:', card);
         let bucket;
         let algoData;
 
         if (!cardIds[card.id]) {
           // the user hasn't seen this card yet
-          algorithm.addFamiliarity(userId, card.id);
+          algoData = algorithm.addFamiliarity(userId, card.id);
         } else {
           // console.log('Familiar card!');
           algoData = cardIds[card.id];
