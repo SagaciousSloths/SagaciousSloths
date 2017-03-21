@@ -12,6 +12,15 @@
 	text-align: center;
 }
 
+.cohortButton {
+  background-color: #40b1f6;
+  padding: 25px;
+  width: 200px;
+  height: 200px;
+  border-radius: 20px;
+  text-align: center;
+}
+
 .readyButton {
   display: inline-block;
   padding: 10px 10px;
