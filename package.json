@@ -5,11 +5,10 @@
   "author": "",
   "license": "",
   "engines": {
-    "node": "6.6.0"
+    "node": ">=6.4.0"
   },
   "scripts": {
-    "start": "node server/index.js",
-    "start-dev": "nodemon server/index.js",
+    "start": "nodemon server/index.js",
     "react-dev": "webpack -d --watch",
     "db": "mongod",
     "bkgrnd-db": "sudo mongod --fork --logpath /var/log/mongodb.log",
