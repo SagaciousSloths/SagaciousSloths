@@ -31,7 +31,6 @@ class Quiz extends React.Component {
     axios.get('/dashboard')
     .then(function (response) {
       var cohortList = Object.keys(response.data).sort();
-      // finalize sorting function .sort();
       _this.setState({
         cohortList: cohortList
       });
@@ -56,20 +55,23 @@ class Quiz extends React.Component {
     });
   }
 
-  saveUserAnswer() {
+  saveUserAnswer(event, string) {
+    event.preventDefault();
+    console.log(string);
     var _this = this;
-    // commenting out ajax for functionality check
-    // $.ajax({
-    //   url: '/quiz',
-    //   method: 'POST',
-    //   contentType: 'application/json',
-    //   success: function() {
-    //     console.log('success');
-    //   },
-    //   error: function() {
-    //     console.error('error');
-    //   }
-    // });
+    $.ajax({
+      url: '/quiz',
+      method: 'POST',
+      contentType: 'application/json',
+      dataType: 'json', 
+      success: function() {
+        console.log('success');
+        // save string value 
+      },
+      error: function() {
+        console.error('error');
+      }
+    });
     var counter = this.state.counter + 1;
     _this.setState({
       counter: counter
@@ -78,20 +80,19 @@ class Quiz extends React.Component {
     this.renderNextStudent();
   }
 
+ // {id: ‘id of card quizzed on received from server in GET /quiz', quizResult: ‘gotit/almost/nope’}
+
   renderNextStudent() {
-    console.log(this.state.counter);
     $.ajax({
       url: '/quiz',
       method: 'GET',
       success: function(data) {
-        console.log(this);
         this.setState({
           firstname: data[this.state.counter].firstname,
           lastname: data[this.state.counter].lastname,
           deck: data[this.state.counter].deck,
           pictureUrl: data[this.state.counter].pictureUrl
         })
-        console.log(this);
       }.bind(this),
       error: function(err) {
         console.error('error', err);

@@ -6,9 +6,9 @@ const Answer = (props) => (
 			{props.firstname} {props.lastname}
 		</h3>
 		<div>
-			<button onClick={props.saveUserAnswer} className="gotItButton">Got it!</button>
-			<button onClick={props.saveUserAnswer} className="almostButton">Almost</button>
-			<button onClick={props.saveUserAnswer} className="nopeButton">Nope!</button>
+			<button className="gotItButton" onClick={ (event) => {props.saveUserAnswer(event, 'got it')} }>Got it!</button>
+			<button className="almostButton" onClick={ (event) => {props.saveUserAnswer(event, 'almost')} }>Almost</button>
+			<button className="nopeButton" onClick={ (event) => {props.saveUserAnswer(event, 'nope')} }>Nope</button>
 		</div>
 	</div>
 );
