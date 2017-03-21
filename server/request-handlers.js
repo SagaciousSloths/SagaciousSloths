@@ -123,10 +123,13 @@ var updateUserCardFamiliarity = function (req, res) {
   var quizResult;
   ({cardId, quizResult} = req.body());
 
+  console.log('in handler, update cardId', cardId, 'quiz res', quizResult);
+
   algorithm.updateFamiliarity(userId, cardId, quizResult);
 
   res.status(201).send('Updated card-user data');
 };
+
 
 var resetMongo = function (req, res) {
   mongo.resetDB(function(dbResetResult) {
