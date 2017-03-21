@@ -58,8 +58,6 @@ var getDeckBucketCounts = function (req, res) {
   var userId = 0;
 
   mongo.getCardIds(userId, function(cardIds) {
-
-    // TESTING:
     // cardIds = {
     //   'complex unique string1': {algoData},  // full algoData object
     //   'complex unique string2': {algoData},
