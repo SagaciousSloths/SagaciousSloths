@@ -100,7 +100,18 @@ module.exports = {
   },
 
   setAlgoParams(userId, cardId, algoParams, callback) {
-    // Jeff: TODO!
+    Familiarities.update({StaffID: userId, StudentID: cardId}, 
+      {AlgoParams: algoParams}, 
+      function(err, data) {
+        if (err) {
+          return handleError(err);
+        } else {
+          console.log('from Mongo setAlgoParams: ', data);
+          callback(data);
+        }
+      }
+    );
+
   },
 
   populateDB: function(newCards, cb) {
@@ -163,3 +174,5 @@ module.exports = {
 // module.exports.populateDB(newCards, cb);
 // module.exports.findAll(cb);
 // module.exports.getOrderedCardIds(0, cb);
+// module.exports.setAlgoParams(0, 'DavidDeng', { nextQuizDate: 14900000000, repetition: 2, efactor: 3.5 }, cb);
+
