@@ -11,7 +11,8 @@
     "start": "nodemon server/index.js",
     "react-dev": "webpack -d --watch",
     "db": "mongod",
-    "bkgrnd-db": "sudo mongod --fork --logpath /var/log/mongodb.log"
+    "bkgrnd-db": "sudo mongod --fork --logpath /var/log/mongodb.log",
+    "test": "mocha test/server"
   },
   "dependencies": {
     "body-parser": "^1.17.1",
