@@ -20,6 +20,12 @@ var getNewParams = function () {
   return result;
 };
 
+var updateEfactor = function (algoParams, q) {
+  algoParams.efactor = Math.max( algoParams.efactor + (0.1 - (5 - q) * (0.08 + (5 - q) * 0.02)), 1.3);
+};
+
+
+
 exports.addFamiliarity = function (userId, cardId) {
   var algoParams = getNewParams();
   mongo.addFamiliarity(userId, cardId, algoParams);  // don't need to wait for result
@@ -28,12 +34,9 @@ exports.addFamiliarity = function (userId, cardId) {
   return algoParams;
 };
 
+
 // Update algoParams after a quiz on a card
 exports.updateFamiliarity = function (userId, cardId, quizResult) {
-  
-  // Testing
-  cardId = 'complex unique string1';
-  quizResult = 'almost';
 
   mongo.getAlgoParams(userId, cardId, function(algoParams) {
     // Testing, to remove:
@@ -42,22 +45,51 @@ exports.updateFamiliarity = function (userId, cardId, quizResult) {
       algoParams = getNewParams();
     } 
 
-// TODO: algoParams.efactor = algoParams.efactor + (0.1-(5-q))
+    let q;
+
+    console.log('now is:', Date.now());
+
     if (quizResult === 'nope') {
-      algoParams.nextQuizDate -= dayInMilliSeconds;
+      algoParams.nextQuizDate -= dayInMilliSeconds;  
+      // Use days in the past as a way to increase priority in next drawing
+      algoParams.repetition = 0;  // remember this card was not known
+      updateEfactor(algoParams, 0.5);  // The only way to get efactor of 1.3 as mentioned in spec
+      // is to reduce efactor on bad answers. (see SM2-Algorithm.md in this directory).
+      // I assume the directive to not change E-Factor on bad responses only applies
+      // to the initial intervals, while efactor still updates at every try.
+      // Then the efactor comes into play after a few successful quizzes: if the card has 
+      // a bad history for the user, the efactor will start at 1.3
+
+      console.log('NOPE Card, setting algoParams:', algoParams);
+
+    } else if (quizResult === 'almost') {
+      algoParams.nextQuizDate = Date.now();  // assign to orange 'due now' bucket
+      //Specs says don't change eFactor in this case
+      algoParams.repetition = 0;  // remember this card was not known
+      updateEfactor(algoParams, 0.5);  // see note for 'nope' case
+      console.log('ALMOST Card, setting algoParams:', algoParams);
+
     } else if (quizResult === 'gotit') {
-      if (algoParams.repetition === 1) {
+      if (algoParams.repetition === 0) {
+        //algoParams.eFactor = 2.5;
+        algoParams.repetition = 1;
+        // don't change efactor here
+      } else if (algoParams.repetition === 1) {
         algoParams.repetition = 6;
+        // don't change efactor here
       } else {
         algoParams.repetition = algoParams.efactor * algoParams.repetition;
+        updateEfactor(algoParams, 4.5);  // correct response after a little hesitation
       }
       algoParams.nextQuizDate = Date.now() + algoParams.repetition * dayInMilliSeconds;
+      console.log('GOTIT Card, setting algoParams:', algoParams);
     }
-    // else: 'almost', keep at current date
-   
-  });
 
+    // TODO: update the database record for the user! 
+    
+  });
 };
+
 
 
 exports.getBucket = function (algoData) {

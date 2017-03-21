@@ -87,8 +87,12 @@ module.exports = {
 
         console.log('getAlgoParams in familiarities:', card);
 
+        if (card.length > 1) {
+          console.error('Logic error: multiple cards found for same user-card pair, using the first');
+        }
+
         if (card) {
-          callback(card.AlgoParams);
+          callback(card[0].AlgoParams);
         } else {
           callback();
         }
