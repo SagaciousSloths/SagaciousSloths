@@ -35,18 +35,26 @@ exports.updateFamiliarity = function (userId, cardId, quizResult) {
   cardId = 'complex unique string1';
   quizResult = 'almost';
 
-  var algoParams = mongo.getAlgoData(userId, cardId, function(algoParams) {
+  mongo.getAlgoParams(userId, cardId, function(algoParams) {
     // Testing, to remove:
     if (!algoParams) {
       console.log('Card not found in Familiarities, for update. userId:', userId, 'cardId:', cardId);
-      algoParams = exports.addFamiliarity(userId, card.id);
-    }
+      algoParams = getNewParams();
+    } 
 
+// TODO: algoParams.efactor = algoParams.efactor + (0.1-(5-q))
     if (quizResult === 'nope') {
-      // if (algoParams.)
-    // if algoParams.nextquizdate in the past, keep it there
-    // it should go from orange to red
-    }    
+      algoParams.nextQuizDate -= dayInMilliSeconds;
+    } else if (quizResult === 'gotit') {
+      if (algoParams.repetition === 1) {
+        algoParams.repetition = 6;
+      } else {
+        algoParams.repetition = algoParams.efactor * algoParams.repetition;
+      }
+      algoParams.nextQuizDate = Date.now() + algoParams.repetition * dayInMilliSeconds;
+    }
+    // else: 'almost', keep at current date
+   
   });
 
 };
