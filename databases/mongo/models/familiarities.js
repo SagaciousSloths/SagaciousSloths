@@ -17,13 +17,13 @@ var Familiarities = mongoose.model('Familiarities', FamiliaritySchema);
 module.exports = {
 
   addFamiliarity: function (userId, cardId, algoData) {
-    // console.log('in addFamiliarity, algoData:', algoData);
+    console.log('in addFamiliarity, algoData:', algoData);
     module.exports.populateDB([{
       StaffID: userId,
       StudentID: cardId,
       AlgoParams: algoData
     }], ((result) => {
-      //console.log('Result of addFamiliarity:', result);
+      console.log('Result of addFamiliarity:', result);
     })
     );
   },
@@ -51,7 +51,7 @@ module.exports = {
       let cardIds = {};
 
       userCards.forEach(function(card) {
-        // console.log('card', card, 'card.StudentID', card.StudentID, 'Algo params:', card.AlgoParams);
+        console.log('card', card, 'card.StudentID', card.StudentID, 'Algo params:', card.AlgoParams);
         cardIds[card.StudentID] = card.AlgoParams;
       });
 

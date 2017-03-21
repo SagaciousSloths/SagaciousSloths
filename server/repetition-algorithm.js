@@ -22,7 +22,9 @@ var getNewParams = function () {
 
 exports.addFamiliarity = function (userId, cardId) {
   var algoParams = getNewParams();
-  mongo.addFamiliarity(userId, cardId, algoParams);
+  mongo.addFamiliarity(userId, cardId, algoParams);  // don't need to wait for result
+
+  console.log('in algo, returning params:', algoParams);
   return algoParams;
 };
 
