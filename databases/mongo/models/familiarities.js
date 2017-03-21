@@ -99,6 +99,10 @@ module.exports = {
       }); 
   },
 
+  setAlgoParams(userId, cardId, algoParams, callback) {
+    // Jeff: TODO!
+  },
+
   populateDB: function(newCards, cb) {
     let mongoDocCards = [];
 
