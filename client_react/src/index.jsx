@@ -21,7 +21,6 @@ class Quiz extends React.Component {
     this.moveBackToReady = this.moveBackToReady.bind(this);
     this.renderNextStudent = this.renderNextStudent.bind(this);
     this.saveUserAnswer = this.saveUserAnswer.bind(this);
-    this.renderStats = this.renderStats.bind(this);
   }
 
   componentDidMount () {
