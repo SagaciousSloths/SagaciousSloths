@@ -21,6 +21,7 @@ class Quiz extends React.Component {
     this.moveBackToReady = this.moveBackToReady.bind(this);
     this.renderNextStudent = this.renderNextStudent.bind(this);
     this.saveUserAnswer = this.saveUserAnswer.bind(this);
+    this.renderStats = this.renderStats.bind(this);
   }
 
   componentDidMount () {
@@ -144,6 +145,7 @@ class Quiz extends React.Component {
       <div> 
       {this.state.page === 'dashboard' ? (
         <div className="cohortButtonContainer">
+          {this.renderStats}
           {this.state.cohortList.map((cohort, index) => {
             return (
               <button key={index} onClick={(cohort) => { this.loadQuiz(cohort); }} className="cohortButton">{cohort}</button>
