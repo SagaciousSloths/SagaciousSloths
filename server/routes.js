@@ -4,6 +4,7 @@ var handlers = require('./request-handlers');
 var googleSheet = require(__dirname + '/../databases/google/google-sheet');
 
 router.post('/login', authenticate.authenticate);
+
 router.get('/dashboard', handlers.dashboard.get);
 
 router.get('/quiz', handlers.quiz.get);

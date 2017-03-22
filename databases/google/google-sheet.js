@@ -57,13 +57,13 @@ exports.getAllCards = function (callback) {
         var result = [];
         parsedData.forEach(function(elem) {
           var card = {};
-          card.id = elem[0] + elem[1];
           card.firstname = elem[0];
           card.lastname = elem[1];
           card.pictureUrl = elem[2];
           card.deck = elem[3];
+          card.id = elem[0] + elem[1] + elem[2] + elem[3];
 
-          if (card.id && card.firstname && card.lastname && card.pictureUrl && card.deck) {
+          if (card.firstname && card.lastname && card.pictureUrl && card.deck) {
             result.push(card);
           }
         });
