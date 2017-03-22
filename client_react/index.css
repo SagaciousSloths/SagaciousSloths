@@ -3,6 +3,24 @@
   text-align: center;
 }
 
+.cohortButtonAndStatsContainer {
+  margin-right: 30px;
+}
+
+.statBox {
+  display: box;
+  margin: auto;
+  background-color: #ffffff;
+  padding: 10px 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  float: center;
+  width: 40px;
+  height: 10px;
+  border-radius: 5px;
+}
+
+
 #quiz {
 	background-color: #fefcf6;
 	padding: 100px;
@@ -162,4 +180,29 @@
   background-color: #b03131;
   box-shadow: 0 5px #b2b2b2;
   transform: translateY(4px);
+}
+
+.redStat {
+  margin-right: 10px;
+  text-align: center;
+  color: #34b62f;
+}
+
+.orangeStat {
+  margin-right: 10px;
+  text-align: center;
+  color: #f2a208;
+}
+
+.greenStat {
+  margin-right: 10px;
+  text-align: center;
+  color: #c10b0b;
+}
+
+
+.idk {
+  text-align: center;
+  margin: auto;
+  float: center;
 }

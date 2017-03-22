@@ -13,7 +13,7 @@ class Quiz extends React.Component {
       ready: false,
       page: 'dashboard',
       cohortList: [],
-      stats: ''
+      cohortStats: {}
     };
     this.isReady = this.isReady.bind(this);
     this.loadQuiz = this.loadQuiz.bind(this);
@@ -34,13 +34,24 @@ class Quiz extends React.Component {
     .then(function (response) {
       var cohortList = Object.keys(response.data).sort();
       _this.setState({
-        cohortList: cohortList
+        cohortList: cohortList,
+        cohortStats: response.data
       });
       _this.setState({
         page: 'dashboard'
       });
-    });    
+      console.log(_this.state.cohortStats);
+    });
   }
+
+  // { SF73: { red: 1, orange: 4, green: 5 },
+  //   SF72: { red: 0, orange: 1, green: 2 } }
+
+
+  renderStats() {
+
+  }
+
 
   saveUserAnswer(event, answer) {
     event.preventDefault();
@@ -54,7 +65,6 @@ class Quiz extends React.Component {
     console.log('counter:', counter, '  cards length:', this.state.cards.length);
 
     if (counter < this.state.cards.length) {
-      // this.moveBackToReady();
       this.setState({
         counter: counter,
         ready: false,
@@ -87,7 +97,6 @@ class Quiz extends React.Component {
   }
 
   loadQuiz(event) {
-    // var _this = this;
     console.log('loading quiz for cohort:', event.target.innerHTML);
     $.ajax({
       url: '/quiz',
@@ -127,6 +136,8 @@ class Quiz extends React.Component {
     });
   }
 
+
+
   isReady() {
     this.setState({
       ready: true
@@ -139,16 +150,28 @@ class Quiz extends React.Component {
     });
   }
 
-
   render() {
     return (
       <div> 
       {this.state.page === 'dashboard' ? (
         <div className="cohortButtonContainer">
-          {this.renderStats}
           {this.state.cohortList.map((cohort, index) => {
+            var _cohort = cohort;
             return (
-              <button key={index} onClick={(cohort) => { this.loadQuiz(cohort); }} className="cohortButton">{cohort}</button>
+              <div className="cohortStatContainer">
+                <div>
+                  <button key={index} onClick={(cohort) => { this.loadQuiz(cohort); }} className="cohortButton">
+                    {cohort} 
+                  </button>
+                  <div className="statBox">
+                    <span className="redStat">{this.state.cohortStats[cohort].red}</span>
+                    <span className="orangeStat">{this.state.cohortStats[cohort].orange}</span>
+                    <span className="greenStat">{this.state.cohortStats[cohort].green}</span>
+                  </div>
+                </div>
+                
+
+              </div>
             );
           })}
         </div>
