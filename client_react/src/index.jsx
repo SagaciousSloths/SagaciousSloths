@@ -45,9 +45,21 @@ class Quiz extends React.Component {
     event.preventDefault();
     let cardId = this.state.cards[this.state.counter].id;
 
-    var _this = this;
 
     console.log('React: sending to server the answer:', answer, 'for cardID:', cardId);
+   
+    var counter = this.state.counter + 1;
+
+    console.log('counter:', counter, '  cards length:', this.state.cards.length);
+
+    if (counter < this.state.cards.length) {
+      // this.moveBackToReady();
+      this.setState({
+        counter: counter,
+        ready: false,
+      });
+    }
+    var _this = this;
 
     $.ajax({
       url: '/api/card',
@@ -59,8 +71,8 @@ class Quiz extends React.Component {
       success: function() {
         console.log('ajax success updating card');
 
-        console.log('counter:', _this.state.counter, 'cards.length:', _this.state.cards.length);
-        if (_this.state.counter >= _this.state.cards.length - 1) {
+        console.log('counter:', counter, 'cards.length:', _this.state.cards.length);
+        if (counter >= _this.state.cards.length ) {
           _this.loadDashboard();  // load the dashboard
         }
 
@@ -69,14 +81,7 @@ class Quiz extends React.Component {
         console.error('error in saveUserAnswer:', err);
       }
     });
-    var counter = this.state.counter + 1;
 
-    if (counter < this.state.cards.length) {
-      this.moveBackToReady();
-      this.setState({
-        counter: counter
-      });
-    }
 
   }
 
