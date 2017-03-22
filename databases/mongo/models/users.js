@@ -23,7 +23,25 @@ module.exports = {
     callback();
   },
   findOne: function(id, callback) {
-    console.log('in findOne - TO IMPLEMENT! ID:', id);
-    callback();
+    console.log('in findOne, ID:', id);
+    Users.findOne({username: id}, function(err, userDoc) {
+      callback(err, userDoc);
+    });
+  },
+  addUser: function(newUser, callback) {
+    let user = new Users(newUser);
+    console.log(user);
+    user.save(function (err, result) {
+      callback(err, result);
+      // if (err) {
+      //   return console.error(err);
+      // } else {
+      //   callback(result);
+      // }
+    });
   }
 };
+// let callback = (result) => console.log(result);
+// module.exports.resetModel((result) => result);
+// module.exports.addUser({username: 'JG', password: 'bluejay'}, callback);
+// module.exports.findOne('Jeff', callback);

@@ -19,10 +19,22 @@ exports.useLocalPassportStrategy = function () {
   ));	
 };
 
+hash = function (password) {
+  return password;
+};
 
 exports.signup = function (req, res) {
   console.log('req.body in signup:', req.body);
-	// mongoUser.addUser ();
+
+  mongoUser.addUser ({username: req.body.username, password: hash(req.body.password)}, 
+  	function(err, result) {
+  		if (err) {
+  			res.redirect('/login.html');
+  		} else {
+	  		res.redirect('/');
+	  	}
+  	});
+
 };
 
 
@@ -37,17 +49,7 @@ exports.authenticate = function (req, res) {
   });	
 };
 
-passport.serializeUser(function(user, done) {
-  console.log('!!!!!!!!!! serialize being called for user:', user);
-  done(null, user.id);
-});
 
-passport.deserializeUser(function(id, done) {
-  console.log('!!!!!!!!!! de-serialize being called for id:', id);
-  mongo.Users.findById(id, function(err, user) {
-    done(err, user);
-  });
-});
 
 // exports = {
 //   get: {
