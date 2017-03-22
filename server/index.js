@@ -5,7 +5,7 @@ var session = require('express-session');
 var passport = require('passport');
 var authentication = require('./authentication');
 var LocalStrategy = require('passport-local').Strategy;
-var mongoUser = require(__dirname + '/../databases/mongo/models/users');
+var mongoUsers = require(__dirname + '/../databases/mongo/models/users');
 
 
 
@@ -16,12 +16,14 @@ module.exports.app = app;
 
 app.set('port', process.env.PORT || 3000);
 
+app.use(parser.json());
+app.use(parser.urlencoded({ extended: true }));
 
 // ----------- Authentication & cookies ---------------
 // authentication.useLocalPassportStrategy();
 passport.use(new LocalStrategy(
 function(username, password, done) {
-  mongoUser.findOne({ username: username }, function (err, user) {
+  mongoUsers.findOne({ username: username }, function (err, user) {
     if (err) { return done(err); }
     if (!user) {
       return done(null, false, { message: 'Incorrect username.' });
@@ -41,7 +43,7 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {
   console.log('!!!!!!!!!! de-serialize being called for id:', id);
-  mongo.Users.findById(id, function(err, user) {
+  mongoUsers.findById(id, function(err, user) {
     done(err, user);
   });
 });
@@ -59,8 +61,6 @@ app.use(passport.session());
 
 // ---------- Other uses
 
-app.use(parser.json());
-app.use(parser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + '/../public/'));
 
