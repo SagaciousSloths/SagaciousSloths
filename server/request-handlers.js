@@ -1,5 +1,6 @@
 var googleSheet = require(__dirname + '/../databases/google/google-sheet');
 var mongo = require(__dirname + '/../databases/mongo/models/familiarities');
+var mongoUsers = require(__dirname + '/../databases/mongo/models/users');
 var algorithm = require('./repetition-algorithm');
 
 
@@ -141,9 +142,12 @@ var updateUserCardFamiliarity = function (req, res) {
 
 
 var resetMongo = function (req, res) {
-  mongo.resetDB(function(dbResetResult) {
-    console.log('dbResetResult: ', dbResetResult);
+  mongo.resetDB(function(FamiliaritiesResetResult) {
+    console.log('FamiliaritiesResetResult: ', FamiliaritiesResetResult);
     res.status(200).send('Mongo Familiarities table reset');
+  });
+  mongoUsers.resetModel(function(UsersResetResult) {
+    console.log('UsersResetResult: ', UsersResetResult);
   });
 };
 

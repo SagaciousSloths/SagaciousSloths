@@ -1,9 +1,9 @@
 var router = require('express').Router();
-var authenticate = require('./authentication');
+var authentication = require('./authentication');
 var handlers = require('./request-handlers');
 var googleSheet = require(__dirname + '/../databases/google/google-sheet');
 
-router.post('/login', authenticate.authenticate);
+router.post('/login', authentication.authenticate);
 
 router.get('/dashboard', handlers.dashboard.get);
 
