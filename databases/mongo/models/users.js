@@ -18,4 +18,12 @@ module.exports = {
       }
     });
   },
+  findById: function(id, callback) {
+    console.log('in findById - TO IMPLEMENT! id:', id);
+    callback();
+  },
+  findOne: function(id, callback) {
+    console.log('in findOne - TO IMPLEMENT! ID:', id);
+    callback();
+  }
 };
