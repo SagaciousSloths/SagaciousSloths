@@ -95,7 +95,9 @@ exports.getQuizCards = function (orderedCardIds, deckname, callback) {
 
     orderedCardIds.forEach(function(cardId) {
       // console.log('cardId:', cardId);
-      if (cardsObject[cardId].deck === deckname) {
+      if (!cardsObject[cardId]) {
+        console.error('Card with id:', cardId, 'not found in GoogleSheets');
+      } else if (cardsObject[cardId].deck === deckname) {
         quizCards.push(cardsObject[cardId]);
       }
     });

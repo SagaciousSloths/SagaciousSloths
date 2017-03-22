@@ -87,7 +87,7 @@ var getDeckQuiz = function (req, res) {
     // console.log('ordered cardIds in getDeckQuiz:', orderedCardIds);
     // TESTING:
     // cardIds = ['complex unique string1', 'complex unique string2': '1'];
-    console.log('OrderedCardIds received from mongo:', orderedCardIds);
+    // console.log('OrderedCardIds received from mongo:', orderedCardIds);
 
     googleSheet.getQuizCards(orderedCardIds, deckname, function(quizCards) {
       // TESTING:
@@ -105,7 +105,7 @@ var getDeckQuiz = function (req, res) {
       //   deck: 'HRSF73'
       // }];
 
-      console.log('@@@@@@@@@ Sending to React the cards:', quizCards);
+      // console.log('@@@@@@@@@ Sending to React the cards:', quizCards);
 
       res.status(200).send(quizCards);
       
@@ -118,17 +118,18 @@ var getDeckQuiz = function (req, res) {
 // data: {cardId: 'cardId', quizResult: 'gotIt/almost/nope'}
 var updateUserCardFamiliarity = function (req, res) {
 
+  // console.log('In updateUserCardFamiliarity, Req body is:', req.body);
+
   // Future sprint: get current user ID and pass it as param to getUserScores
   var userId = 0;
 
-  var id;
-  var quizResult;
-  console.log('Req body is:', req.body);
-  ({id, quizResult} = req.body);
 
-  console.log('in handler, update car id:', id, '  quiz res:', quizResult);
+  let cardId = req.body.cardId;
+  let answer = req.body.answer;
 
-  algorithm.updateFamiliarity(userId, id, quizResult);
+  console.log('in handler, update card id:', cardId, '  quiz res:', answer);
+
+  algorithm.updateFamiliarity(userId, cardId, answer);
 
   res.status(201).send('Updated card-user data');
 };

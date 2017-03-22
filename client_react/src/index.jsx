@@ -59,17 +59,19 @@ class Quiz extends React.Component {
 
   saveUserAnswer(event, answer) {
     event.preventDefault();
-    // console.log('JG;', string);
-    var _this = this;
+    let cardId = this.state.cards[this.state.counter].id;
+
+    console.log('React: sending to server the answer:', answer, 'for cardID:', cardId);
+    // var _this = this;
     $.ajax({
       url: '/api/card',
       method: 'POST',
-      contentType: 'html/text',
-      // contentType: 'application/json',
+      // contentType: 'html/text',
+      contentType: 'application/json',
       // dataType: 'json', 
-      data: answer,
+      data: JSON.stringify({ cardId: cardId, answer: answer}),
       success: function() {
-        console.log('success');
+        console.log('ajax success updating ');
         // save string value 
       },
       error: function() {
@@ -77,11 +79,11 @@ class Quiz extends React.Component {
       }
     });
     var counter = this.state.counter + 1;
-    _this.setState({
+    this.moveBackToReady();
+    this.setState({
       counter: counter
     });
-    this.moveBackToReady();
-    this.renderNextStudent();
+    // this.renderNextStudent();
   }
 
  // {id: ‘id of card quizzed on received from server in GET /quiz', quizResult: ‘gotit/almost/nope’}
