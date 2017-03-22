@@ -18,7 +18,9 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "chai": "^3.5.0",
+    "cookie-parser": "^1.4.3",
     "express": "^4.15.2",
+    "express-session": "^1.15.1",
     "grunt": "^1.0.1",
     "grunt-contrib-concat": "^1.0.0",
     "grunt-contrib-cssmin": "^1.0.1",
@@ -34,6 +36,7 @@
     "mongodb": "^2.2.24",
     "mongoose": "^4.9.0",
     "nodemon": "^1.11.0",
+    "passport-local": "^1.0.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-router": "^4.0.0",
