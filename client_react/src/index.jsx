@@ -11,16 +11,17 @@ class Quiz extends React.Component {
       cards: [],
       counter: 0,
       ready: false,
-      firstname: '',
-      lastname: '',
-      deck: '',
-      pictureUrl: '',
+      // firstname: '',
+      // lastname: '',
+      // deck: '',
+      // pictureUrl: '',
       page: 'dashboard',
       cohortList: []
     };
     this.isReady = this.isReady.bind(this);
     // this.getFirstStudent = this.getFirstStudent.bind(this);
     this.loadQuiz = this.loadQuiz.bind(this);
+    this.loadDashboard = this.loadDashboard.bind(this);
     this.moveBackToReady = this.moveBackToReady.bind(this);
     this.renderNextStudent = this.renderNextStudent.bind(this);
     this.saveUserAnswer = this.saveUserAnswer.bind(this);
@@ -28,15 +29,23 @@ class Quiz extends React.Component {
   }
 
   componentDidMount () {
-    var _this = this;
+    this.loadDashboard();
     // this.getFirstStudent();
+  }
+
+  loadDashboard () {
+    var _this = this;
     axios.get('/dashboard')
     .then(function (response) {
+      // console.log('After axios');
       var cohortList = Object.keys(response.data).sort();
       _this.setState({
         cohortList: cohortList
       });
-    });
+      _this.setState({
+        page: 'dashboard'
+      });
+    });    
   }
 
   // getFirstStudent() {
@@ -61,6 +70,8 @@ class Quiz extends React.Component {
     event.preventDefault();
     let cardId = this.state.cards[this.state.counter].id;
 
+    var _this = this;
+
     console.log('React: sending to server the answer:', answer, 'for cardID:', cardId);
     // var _this = this;
     $.ajax({
@@ -71,18 +82,26 @@ class Quiz extends React.Component {
       // dataType: 'json', 
       data: JSON.stringify({ cardId: cardId, answer: answer}),
       success: function() {
-        console.log('ajax success updating ');
-        // save string value 
+        console.log('ajax success updating card');
+
+        console.log('counter:', _this.state.counter, 'cards.length:', _this.state.cards.length);
+        if (_this.state.counter >= _this.state.cards.length - 1) {
+          _this.loadDashboard();  // load the dashboard
+        }
+
       },
-      error: function() {
-        console.error('error');
+      error: function(err) {
+        console.error('error in saveUserAnswer:', err);
       }
     });
     var counter = this.state.counter + 1;
-    this.moveBackToReady();
-    this.setState({
-      counter: counter
-    });
+
+    if (counter < this.state.cards.length) {
+      this.moveBackToReady();
+      this.setState({
+        counter: counter
+      });
+    }
     // this.renderNextStudent();
   }
 
