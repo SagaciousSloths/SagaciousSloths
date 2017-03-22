@@ -62,7 +62,10 @@ exports.getAllCards = function (callback) {
           card.lastname = elem[1];
           card.pictureUrl = elem[2];
           card.deck = elem[3];
-          result.push(card);
+
+          if (card.id && card.firstname && card.lastname && card.pictureUrl && card.deck) {
+            result.push(card);
+          }
         });
         callback(result);
 

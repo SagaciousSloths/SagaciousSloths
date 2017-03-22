@@ -40,6 +40,11 @@ var getDeckBucketCounts = function (req, res) {
       cards.forEach(function(card) {
 
         // console.log('in foreach of getDeckBucketCounts, card:', card);
+        if (!(card.id && card.firstname && card.lastname && card.pictureUrl && card.deck)) {
+          // incomplete line, skip it!
+          return;
+        }
+
         let bucket;
         let algoData;
 
