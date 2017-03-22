@@ -14,6 +14,7 @@ module.exports.app = app;
 app.set('port', process.env.PORT || 3000);
 
 app.use(cookieParser());
+
 app.use(session({ 
   secret: 'DavidJeffJGKay',
   resave: false,

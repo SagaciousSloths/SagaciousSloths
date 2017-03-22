@@ -20,6 +20,12 @@ exports.useLocalPassportStrategy = function () {
 };
 
 
+exports.signup = function (req, res) {
+  console.log('req.body in signup:', req.body);
+	// mongoUser.addUser ();
+};
+
+
 exports.authenticate = function (req, res) {
   console.log('In authenticate, req body:', req.body);
   passport.authenticate('local', { 
@@ -42,3 +48,12 @@ passport.deserializeUser(function(id, done) {
     done(err, user);
   });
 });
+
+// exports = {
+//   get: {
+//   	signup: displaySignupPage,
+//   }
+//   post: {
+//   	signup: processSignup,
+//   }
+// };

@@ -5,11 +5,13 @@ var passport = require('passport');
 var handlers = require('./request-handlers');
 var googleSheet = require(__dirname + '/../databases/google/google-sheet');
 
+router.post('/signup', authentication.signup);
+
 router.post('/login',
   passport.authenticate('local', { 
     successRedirect: '/',
     failureRedirect: '/login.html',
-    
+
     // failureFlash: true
   }), function(req, res) {
     res.redirect('/');
