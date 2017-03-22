@@ -6,9 +6,12 @@ const Answer = (props) => (
 			{props.firstname} {props.lastname}
 		</h3>
 		<div>
-			<button className="gotItButton" onClick={ (event) => {props.saveUserAnswer(event, 'got it')} }>Got it!</button>
-			<button className="almostButton" onClick={ (event) => {props.saveUserAnswer(event, 'almost')} }>Almost</button>
-			<button className="nopeButton" onClick={ (event) => {props.saveUserAnswer(event, 'nope')} }>Nope</button>
+			<p className="answerCorrect">Did you answer correctly?</p>
+			<div className="buttonContainer">
+				<button className="gotItButton" onClick={ (event) => {props.saveUserAnswer(event, 'got it')} }>Yes!</button>
+				<button className="almostButton" onClick={ (event) => {props.saveUserAnswer(event, 'almost')} }>Meh</button>
+				<button className="nopeButton" onClick={ (event) => {props.saveUserAnswer(event, 'nope')} }>Nope</button>
+			</div>
 		</div>
 	</div>
 );

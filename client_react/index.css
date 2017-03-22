@@ -1,10 +1,17 @@
+.answerCorrect {
+  font-family: Arial;
+  text-align: center;
+}
+
 #quiz {
-	background-color: #c9def6;
+	background-color: #fefcf6;
 	padding: 100px;
 }
 
 .profilePic {
-	background-color: #40b1f6;
+  display: block;
+  margin: auto;
+	background-color: #fce1ad;
 	padding: 25px;
 	width: relative;
 	height: 200px;
@@ -14,7 +21,7 @@
 
 .cohortButton {
   margin-right: 10px;
-  background-color: #40b1f6;
+  background-color: #fb8f02;
   padding: 25px;
   width: 100px;
   height: 100px;
@@ -28,16 +35,22 @@
   font-size: 20px;
 }
 
-.cohortButton:hover {background-color: #515151}
+.cohortButton:hover {background-color: #ec8806}
 
 .cohortButton:active {
-  background-color: #515151;
+  background-color: #ec8806;
   box-shadow: 0 5px #b2b2b2;
   transform: translateY(4px);
 }
 
+.buttonContainer {
+  display: block;
+  text-align: center;
+}
+
 .readyButton {
-  display: inline-block;
+  display: block;
+  margin: auto;
   padding: 10px 10px;
   font-size: 20px;
   font-family: Arial;
@@ -46,13 +59,13 @@
   text-decoration: none;
   outline: none;
   color: #fff;
-  background-color: #666666;
+  background-color: #8aa5db;
   border: none;
   border-radius: 5px;
   box-shadow: 0 5px #b2b2b2;
 }
 
-.readyButton:hover {background-color: #515151}
+.readyButton:hover {background-color: #607399}
 
 .readyButton:active {
   background-color: #515151;
@@ -62,15 +75,23 @@
 
 .studentName {
 	font-family: Arial;
+  text-align: center;
+}
+
+.cohortButtonContainer {
+  margin-top: 100px;
+  text-align: center;
 }
 
 .gotItButton {
-	background-color: #098105;
+  width: 60px;
+  height: 50px;
+	background-color: #34b62f;
 	color: white;
 	font-family: Arial;
 	display: inline-block;
   padding: 10px 10px;
-  font-size: 10px;
+  font-size: 15px;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -90,12 +111,14 @@
 }
 
 .almostButton {
-	background-color: #e38817;
+  width: 60px;
+  height: 50px;
+	background-color: #f2a208;
 	color: white;
 	font-family: Arial;
 	display: inline-block;
   padding: 10px 10px;
-  font-size: 10px;
+  font-size: 15px;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -115,12 +138,14 @@
 }
 
 .nopeButton {
-	background-color: #9a0f0f;
+  width: 60px;
+  height: 50px;
+	background-color: #c10b0b;
 	color: white;
 	font-family: Arial;
 	display: inline-block;
   padding: 10px 10px;
-  font-size: 10px;
+  font-size: 15px;
   cursor: pointer;
   text-align: center;
   text-decoration: none;

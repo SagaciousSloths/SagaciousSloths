@@ -11,33 +11,26 @@ class Quiz extends React.Component {
       cards: [],
       counter: 0,
       ready: false,
-      // firstname: '',
-      // lastname: '',
-      // deck: '',
-      // pictureUrl: '',
       page: 'dashboard',
-      cohortList: []
+      cohortList: [],
+      stats: ''
     };
     this.isReady = this.isReady.bind(this);
-    // this.getFirstStudent = this.getFirstStudent.bind(this);
     this.loadQuiz = this.loadQuiz.bind(this);
     this.loadDashboard = this.loadDashboard.bind(this);
     this.moveBackToReady = this.moveBackToReady.bind(this);
     this.renderNextStudent = this.renderNextStudent.bind(this);
     this.saveUserAnswer = this.saveUserAnswer.bind(this);
-    // this.changePageToQuiz = this.changePageToQuiz.bind(this);
   }
 
   componentDidMount () {
     this.loadDashboard();
-    // this.getFirstStudent();
   }
 
   loadDashboard () {
     var _this = this;
     axios.get('/dashboard')
     .then(function (response) {
-      // console.log('After axios');
       var cohortList = Object.keys(response.data).sort();
       _this.setState({
         cohortList: cohortList
@@ -48,24 +41,6 @@ class Quiz extends React.Component {
     });    
   }
 
-  // getFirstStudent() {
-  //   $.ajax({
-  //     url: '/quiz',
-  //     method: 'GET',
-  //     success: function(data) {
-  //       this.setState({
-  //         firstname: data[0].firstname,
-  //         lastname: data[0].lastname,
-  //         deck: data[0].deck,
-  //         pictureUrl: data[0].pictureUrl
-  //       });
-  //     }.bind(this),
-  //     error: function(err) {
-  //       console.error('error', err);
-  //     }
-  //   });
-  // }
-
   saveUserAnswer(event, answer) {
     event.preventDefault();
     let cardId = this.state.cards[this.state.counter].id;
@@ -73,13 +48,13 @@ class Quiz extends React.Component {
     var _this = this;
 
     console.log('React: sending to server the answer:', answer, 'for cardID:', cardId);
-    // var _this = this;
+
     $.ajax({
       url: '/api/card',
       method: 'POST',
-      // contentType: 'html/text',
+
       contentType: 'application/json',
-      // dataType: 'json', 
+
       data: JSON.stringify({ cardId: cardId, answer: answer}),
       success: function() {
         console.log('ajax success updating card');
@@ -102,10 +77,8 @@ class Quiz extends React.Component {
         counter: counter
       });
     }
-    // this.renderNextStudent();
-  }
 
- // {id: ‘id of card quizzed on received from server in GET /quiz', quizResult: ‘gotit/almost/nope’}
+  }
 
   loadQuiz(event) {
     // var _this = this;
@@ -123,12 +96,6 @@ class Quiz extends React.Component {
           page: 'quiz'
         });
         
-        // this.setState({
-        //   firstname: cards[this.state.counter].firstname,
-        //   lastname: cards[this.state.counter].lastname,
-        //   deck: cards[this.state.counter].deck,
-        //   pictureUrl: cards[this.state.counter].pictureUrl
-        // });
       }.bind(this),
       error: function(err) {
         console.error('error loading quiz', err);
@@ -171,7 +138,7 @@ class Quiz extends React.Component {
     return (
       <div> 
       {this.state.page === 'dashboard' ? (
-        <div>
+        <div className="cohortButtonContainer">
           {this.state.cohortList.map((cohort, index) => {
             return (
               <button key={index} onClick={(cohort) => { this.loadQuiz(cohort); }} className="cohortButton">{cohort}</button>
@@ -187,7 +154,7 @@ class Quiz extends React.Component {
           <div>
             {!this.state.ready ? (
                 <button onClick={this.isReady} className="readyButton">
-                  Ready?
+                  Show me the answer
                 </button>
               ) : (
                 <Answer 
