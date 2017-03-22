@@ -77,7 +77,7 @@ exports.getAllCards = function (callback) {
 
 // not needed: exports.getAllCardIds = function () {};
 
-exports.getQuizCards = function (cardIds, deckname, callback) {
+exports.getQuizCards = function (orderedCardIds, deckname, callback) {
   exports.getAllCards(function(cards) {
 
     // console.log('All cards in sheets:', cards);
@@ -93,9 +93,11 @@ exports.getQuizCards = function (cardIds, deckname, callback) {
     // console.log('@@@ cardsObject', cardsObject);
     // console.log('Deckname', deckname);
 
-    cardIds.forEach(function(cardId) {
+    orderedCardIds.forEach(function(cardId) {
       // console.log('cardId:', cardId);
-      if (cardsObject[cardId].deck === deckname) {
+      if (!cardsObject[cardId]) {
+        console.error('Card with id:', cardId, 'not found in GoogleSheets');
+      } else if (cardsObject[cardId].deck === deckname) {
         quizCards.push(cardsObject[cardId]);
       }
     });

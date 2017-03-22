@@ -32,14 +32,14 @@ var getDeckBucketCounts = function (req, res) {
       //   deck: 'HRSF74'
       // },..];
       
-      console.log('cards:', cards);
+      //console.log('cards:', cards);
       
 
       let results = {};
 
       cards.forEach(function(card) {
 
-        console.log('in foreach of getDeckBucketCounts, card:', card);
+        // console.log('in foreach of getDeckBucketCounts, card:', card);
         let bucket;
         let algoData;
 
@@ -72,8 +72,7 @@ var getDeckBucketCounts = function (req, res) {
 // GET /quiz/:deckname -------------------
 var getDeckQuiz = function (req, res) {
 
-  // TODO: find out where the last part of the path is in req
-  var deckname = 'SF72';  // for TESTING
+  var deckname = req.query.deck;  
 
   // Future sprint: get current user ID and pass it as param to getUserScores
   var userId = 0;
@@ -88,6 +87,7 @@ var getDeckQuiz = function (req, res) {
     // console.log('ordered cardIds in getDeckQuiz:', orderedCardIds);
     // TESTING:
     // cardIds = ['complex unique string1', 'complex unique string2': '1'];
+    // console.log('OrderedCardIds received from mongo:', orderedCardIds);
 
     googleSheet.getQuizCards(orderedCardIds, deckname, function(quizCards) {
       // TESTING:
@@ -105,6 +105,8 @@ var getDeckQuiz = function (req, res) {
       //   deck: 'HRSF73'
       // }];
 
+      // console.log('@@@@@@@@@ Sending to React the cards:', quizCards);
+
       res.status(200).send(quizCards);
       
     });    
@@ -116,17 +118,18 @@ var getDeckQuiz = function (req, res) {
 // data: {cardId: 'cardId', quizResult: 'gotIt/almost/nope'}
 var updateUserCardFamiliarity = function (req, res) {
 
+  // console.log('In updateUserCardFamiliarity, Req body is:', req.body);
+
   // Future sprint: get current user ID and pass it as param to getUserScores
   var userId = 0;
 
-  var id;
-  var quizResult;
-  console.log('Req body is:', req.body);
-  ({id, quizResult} = req.body);
 
-  console.log('in handler, update car id:', id, '  quiz res:', quizResult);
+  let cardId = req.body.cardId;
+  let answer = req.body.answer;
 
-  algorithm.updateFamiliarity(userId, id, quizResult);
+  console.log('in handler, update card id:', cardId, '  quiz res:', answer);
+
+  algorithm.updateFamiliarity(userId, cardId, answer);
 
   res.status(201).send('Updated card-user data');
 };

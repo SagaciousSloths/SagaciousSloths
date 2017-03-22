@@ -7,6 +7,7 @@ module.exports.app = app;
 
 app.set('port', process.env.PORT || 3000);
 app.use(parser.json());
+app.use(parser.urlencoded({ extended: true }));
 
 app.use('/', router);
 
