@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "nodemon server/index.js",
+    "postinstall": "grunt build",
     "react-dev": "webpack -d --watch",
     "db": "mongod",
     "bkgrnd-db": "sudo mongod --fork --logpath /var/log/mongodb.log",
