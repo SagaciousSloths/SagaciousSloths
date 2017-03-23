@@ -22,7 +22,6 @@ class Quiz extends React.Component {
     this.moveBackToReady = this.moveBackToReady.bind(this);
     this.renderNextStudent = this.renderNextStudent.bind(this);
     this.saveUserAnswer = this.saveUserAnswer.bind(this);
-    this.renderStats = this.renderStats.bind(this);
   }
 
   componentDidMount () {
@@ -45,15 +44,6 @@ class Quiz extends React.Component {
       console.log(_this.state.cohortStats);
     });
   }
-
-  // { SF73: { red: 1, orange: 4, green: 5 },
-  //   SF72: { red: 0, orange: 1, green: 2 } }
-
-
-  renderStats() {
-
-  }
-
 
   saveUserAnswer(event, answer) {
     event.preventDefault();
@@ -161,19 +151,17 @@ class Quiz extends React.Component {
           {this.state.cohortList.map((cohort, index) => {
             var _cohort = cohort;
             return (
-              <div className="cohortStatContainer">
-                <div>
-                  <button key={index} onClick={(cohort) => { this.loadQuiz(cohort); }} className="cohortButton">
-                    {cohort}
-                  </button>
-                  <div className="statBox">
-                    <span className="redStat">{this.state.cohortStats[cohort].red}</span>
-                    <span className="orangeStat">{this.state.cohortStats[cohort].orange}</span>
-                    <span className="greenStat">{this.state.cohortStats[cohort].green}</span>
-                  </div>
+              <div>
+                <div className="statBox">
+                  <span className="redStat">{this.state.cohortStats[cohort].red}</span>
+                  <span className="orangeStat">{this.state.cohortStats[cohort].orange}</span>
+                  <span className="greenStat">{this.state.cohortStats[cohort].green}</span>
                 </div>
-
-
+                <ul>
+                  <li key={index} onClick={(cohort) => { this.loadQuiz(cohort); }} className="cohortButton">
+                    {cohort}
+                  </li>
+                </ul>
               </div>
             );
           })}
