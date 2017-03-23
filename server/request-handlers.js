@@ -13,8 +13,9 @@ var algorithm = require('./repetition-algorithm');
 var getDeckBucketCounts = function (req, res) {
   // Buckets are: 'red', 'orange' and 'green'
 
+  console.log('in get deck buckets, req:', req);
+
   var userId = req.user._id;
-  // console.log('in get deck buckets, req.user:', req.user);
 
   mongo.getCardIds(userId, function(cardIds) {
     // cardIds = {

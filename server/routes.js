@@ -9,10 +9,12 @@ var googleSheet = require(__dirname + '/../databases/google/google-sheet');
 // TODO: implement a clean login page at /login
 // router.get('/login', express.static(__dirname + '/../public/login.html'));
 
-router.get('/', require('connect-ensure-login').ensureLoggedIn(),
+router.get('/', require('connect-ensure-login').ensureLoggedIn('/login.html'),
   express.static(__dirname + '/../client_react/'));
 
 router.post('/signup', authentication.signup);
+
+// router.get('/login', authentication.get.login);
 
 router.post('/login',
   passport.authenticate('local', { 
