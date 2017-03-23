@@ -166,11 +166,11 @@ class Quiz extends React.Component {
                   <button key={index} onClick={(cohort) => { this.loadQuiz(cohort); }} className="cohortButton">
                     {cohort}
                   </button>
-                  <div className="statBox">
-                    <span className="redStat">{this.state.cohortStats[cohort].red}</span>
-                    <span className="orangeStat">{this.state.cohortStats[cohort].orange}</span>
-                    <span className="greenStat">{this.state.cohortStats[cohort].green}</span>
-                  </div>
+                <div className="statBox">
+                  <span className="redStat">{this.state.cohortStats[cohort].red}</span>
+                  <span className="orangeStat">{this.state.cohortStats[cohort].orange}</span>
+                  <span className="greenStat">{this.state.cohortStats[cohort].green}</span>
+                </div>
                 </div>
 
 
