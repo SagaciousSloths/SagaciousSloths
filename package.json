@@ -37,6 +37,7 @@
     "mongodb": "^2.2.24",
     "mongoose": "^4.9.0",
     "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",

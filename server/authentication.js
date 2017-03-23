@@ -9,16 +9,19 @@ hash = function (password) {
 exports.signup = function (req, res) {
   console.log('req.body in signup:', req.body);
 
-  mongoUser.addUser ({username: req.body.username, password: hash(req.body.password)}, 
-  	function(err, result) {
-  		if (err) {
-  		  console.log('error in call to mongo addUser, error:', err);
-  			res.redirect('/login.html');
-  		} else {
-  		  console.log('success in call to mongo addUser (redirect to /), result:', result);
-	  		res.redirect('/');
-	  	}
-  	});
+  mongoUser.addUser ({
+    username: req.body.username, 
+    password: hash(req.body.password
+  )}, 
+	function(err, result) {
+  if (err) {
+    console.log('error in call to mongo addUser, error:', err);
+    res.redirect('/login.html');
+  } else {
+    console.log('success in call to mongo addUser (redirect to /), result:', result);
+    res.redirect('/');
+  }
+});
 
 };
 
