@@ -20,7 +20,6 @@ app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
 
 // ----------- Authentication & cookies ---------------
-// authentication.useLocalPassportStrategy();
 passport.use(new LocalStrategy(
 function(username, password, done) {
   mongoUsers.findOne({ username: username }, function (err, user) {
