@@ -26,6 +26,7 @@ class Quiz extends React.Component {
   }
 
   componentDidMount () {
+    
     this.loadDashboard();
   }
 

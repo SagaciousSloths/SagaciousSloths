@@ -32,7 +32,7 @@ module.exports = {
   },
   addUser: function(newUser, callback) {
     let user = new Users(newUser);
-    console.log(user);
+    console.log('In mongoUser, add user:', user);
     user.save(function (err, result) {
       callback(err, result);
       // if (err) {

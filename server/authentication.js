@@ -12,8 +12,10 @@ exports.signup = function (req, res) {
   mongoUser.addUser ({username: req.body.username, password: hash(req.body.password)}, 
   	function(err, result) {
   		if (err) {
+  		  console.log('error in call to mongo addUser, error:', err);
   			res.redirect('/login.html');
   		} else {
+  		  console.log('success in call to mongo addUser (redirect to /), result:', result);
 	  		res.redirect('/');
 	  	}
   	});
@@ -32,3 +34,6 @@ exports.authenticate = function (req, res) {
   });	
 };
 
+// exports.login = function (req, res) {
+//   res.status(300).send('login');
+// };
