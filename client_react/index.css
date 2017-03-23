@@ -3,18 +3,14 @@
   text-align: center;
 }
 
-.cohortButtonAndStatsContainer {
-  margin-right: 30px;
-}
-
 .statBox {
+  margin-top: 85px;
   display: box;
-  margin: auto;
-  background-color: #ffffff;
+  float: left;
+  background-color: #f2eadc;
   padding: 10px 10px;
   padding-top: 10px;
   padding-bottom: 10px;
-  float: center;
   width: 40px;
   height: 10px;
   border-radius: 5px;
@@ -22,28 +18,31 @@
 
 
 #quiz {
-	background-color: #fefcf6;
-	padding: 100px;
+  background-color: #ffffff;
+  padding: 100px;
 }
 
 .profilePic {
   display: block;
   margin: auto;
-	background-color: #fce1ad;
-	padding: 25px;
-	width: relative;
-	height: 200px;
-	border-radius: 20px;
-	text-align: center;
+  background-color: #ffdbac;
+  padding: 15px;
+  width: relative;
+  height: 200px;
+  border-radius: 8px;
+  text-align: center;
 }
 
 .cohortButton {
-  margin-right: 10px;
-  background-color: #fb8f02;
+  display: box;
+  margin-right: 50px;
+  margin-top: 100px;
+  float: left;
+  background-color: #729cac;
   padding: 25px;
-  width: 100px;
-  height: 100px;
-  border-radius: 20px;
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
   text-align: center;
   color: white;
   cursor: pointer;
@@ -77,7 +76,7 @@
   text-decoration: none;
   outline: none;
   color: #fff;
-  background-color: #8aa5db;
+  background-color: #6ed4cf;
   border: none;
   border-radius: 5px;
   box-shadow: 0 5px #b2b2b2;
@@ -201,23 +200,20 @@
 }
 
 
-.idk {
-  text-align: center;
-  margin: auto;
-  float: center;
-}
-
 .menuBar {
   display: block;
+  float: top;
   background-color: #fb8f02;
 }
 
-.leftAlign {
+.logo {
   text-align: left;
   float: left;
   display: inline-grid;
   padding: 10px 20px;
-  background-color: #fb8f02;
+  /*background-color: #fb8f02;*/
+  border-radius: 10px;
+  background-color: #ae0404;
   font-family: arial;
   color: white;
   list-style: none;
@@ -231,7 +227,8 @@
   text-align: right;
   padding: 10px 20px;
   cursor: pointer;
-  background-color: #fb8f02;
+  /*background-color: #fb8f02;*/
+  background-color: #ae0404;
   color: white;
 }
 
