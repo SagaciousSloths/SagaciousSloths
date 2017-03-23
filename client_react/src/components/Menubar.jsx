@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 
 class Menubar extends React.Component {
   constructor(props) {
@@ -16,7 +17,22 @@ class Menubar extends React.Component {
 
     if (this.props.items[index] === 'Dashboard') {
       this.props.loadDashboard();
+    } else if (this.props.items[index] === 'Log Out') {
+      this.logOut();
     };
+  }
+
+  logOut() {
+    $.ajax({
+      url: '/logout',
+      method: 'GET',
+      success: function(data) {
+        document.write(data);
+      }.bind(this),
+      error: function(err) {
+        console.error('error logging out', err);
+      }
+    });
   }
 
   render() {
