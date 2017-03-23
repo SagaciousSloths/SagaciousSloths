@@ -13,7 +13,6 @@ var algorithm = require('./repetition-algorithm');
 var getDeckBucketCounts = function (req, res) {
   // Buckets are: 'red', 'orange' and 'green'
 
-  // Future sprint: get current user ID and pass it as param to getUserScores
   var userId = req.user._id;
   // console.log('in get deck buckets, req.user:', req.user);
 
@@ -81,8 +80,6 @@ var getDeckQuiz = function (req, res) {
 
   var deckname = req.query.deck;  
 
-  // Future sprint: get current user ID and pass it as param to getUserScores
-  // var userId = 0;
   console.log('in get deck quiz, req.user:', req.user);
 
   var userId = req.user._id;
@@ -128,15 +125,13 @@ var getDeckQuiz = function (req, res) {
 var updateUserCardFamiliarity = function (req, res) {
 
   // console.log('In updateUserCardFamiliarity, Req body is:', req.body);
-
-  // Future sprint: get current user ID and pass it as param to getUserScores
-  var userId = 0;
+  var userId = req.user._id;
 
 
   let cardId = req.body.cardId;
   let answer = req.body.answer;
 
-  console.log('in handler, update card id:', cardId, '  quiz res:', answer);
+  console.log('in handler, update card familiarity, update card id:', cardId, '  quiz res:', answer);
 
   algorithm.updateFamiliarity(userId, cardId, answer);
 
@@ -175,7 +170,7 @@ module.exports = {
 // based on a Google spreadsheet of names
 // var createFamiliarities = function(req, res) {
 //   // Future sprint: get current user ID and pass it as param to getUserScores
-//   var userId = 0;
+//   var userId = TBD;
 
 //   var cards = googleSheet.getAllCards(function(cards) {
 //     console.log('cards:', cards);

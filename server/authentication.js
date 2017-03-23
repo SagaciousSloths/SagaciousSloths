@@ -2,23 +2,6 @@ var mongoUser = require(__dirname + '/../databases/mongo/models/users');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-exports.useLocalPassportStrategy = function () {
-  passport.use(new LocalStrategy(
-    function(username, password, done) {
-      mongoUser.findOne({ username: username }, function (err, user) {
-        if (err) { return done(err); }
-        if (!user) {
-          return done(null, false, { message: 'Incorrect username.' });
-        }
-        if (user.password !== password) {
-          return done(null, false, { message: 'Incorrect password.' });
-        }
-        return done(null, user);
-      });
-    }
-  ));	
-};
-
 hash = function (password) {
   return password;
 };
@@ -49,13 +32,3 @@ exports.authenticate = function (req, res) {
   });	
 };
 
-
-
-// exports = {
-//   get: {
-//   	signup: displaySignupPage,
-//   }
-//   post: {
-//   	signup: processSignup,
-//   }
-// };
