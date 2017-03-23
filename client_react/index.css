@@ -206,3 +206,35 @@
   margin: auto;
   float: center;
 }
+
+.menuBar {
+  display: block;
+  background-color: #fb8f02;
+}
+
+.leftAlign {
+  text-align: left;
+  float: left;
+  display: inline-grid;
+  padding: 10px 20px;
+  background-color: #fb8f02;
+  font-family: arial;
+  color: white;
+  list-style: none;
+}
+
+.rightAlign {
+  display: block;
+  font-family: arial;
+  list-style: none;
+  float: right;
+  text-align: right;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #fb8f02;
+  color: white;
+}
+
+.rightAlign:hover {
+  background-color: #ec8806;
+}

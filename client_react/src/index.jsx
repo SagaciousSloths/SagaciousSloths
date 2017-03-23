@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Answer from './components/Answer.jsx';
+import Menubar from './components/Menubar.jsx';
 import $ from 'jquery';
 import axios from 'axios';
 
@@ -59,7 +60,7 @@ class Quiz extends React.Component {
 
 
     console.log('React: sending to server the answer:', answer, 'for cardID:', cardId);
-   
+
     var counter = this.state.counter + 1;
 
     console.log('counter:', counter, '  cards length:', this.state.cards.length);
@@ -106,11 +107,11 @@ class Quiz extends React.Component {
         console.log('loadState, cards:', cards);
         this.setState({cards: cards});
         this.setState({counter: 0});
-        
+
         this.setState({
           page: 'quiz'
         });
-        
+
       }.bind(this),
       error: function(err) {
         console.error('error loading quiz', err);
@@ -152,7 +153,8 @@ class Quiz extends React.Component {
 
   render() {
     return (
-      <div> 
+      <div>
+      <Menubar items={['Dashboard', 'Log Out']} loadDashboard={this.loadDashboard}/>
       {this.state.page === 'dashboard' ? (
         <div className="cohortButtonContainer">
           {this.state.cohortList.map((cohort, index) => {
@@ -161,7 +163,7 @@ class Quiz extends React.Component {
               <div className="cohortStatContainer">
                 <div>
                   <button key={index} onClick={(cohort) => { this.loadQuiz(cohort); }} className="cohortButton">
-                    {cohort} 
+                    {cohort}
                   </button>
                   <div className="statBox">
                     <span className="redStat">{this.state.cohortStats[cohort].red}</span>
@@ -169,7 +171,7 @@ class Quiz extends React.Component {
                     <span className="greenStat">{this.state.cohortStats[cohort].green}</span>
                   </div>
                 </div>
-                
+
 
               </div>
             );
@@ -187,16 +189,16 @@ class Quiz extends React.Component {
                   Show me the answer
                 </button>
               ) : (
-                <Answer 
-                  firstname={this.state.cards[this.state.counter].firstname} 
+                <Answer
+                  firstname={this.state.cards[this.state.counter].firstname}
                   lastname={this.state.cards[this.state.counter].lastname}
                   saveUserAnswer={this.saveUserAnswer}
-                /> 
+                />
               )
             }
           </div>
         </div>
-      )}  
+      )}
       </div>
     );
   }
