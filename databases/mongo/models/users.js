@@ -19,13 +19,13 @@ module.exports = {
     });
   },
   findById: function(id, callback) {
-    console.log('in findById - TO IMPLEMENT! id:', id);
+    // console.log('in findById id:', id);
     Users.findOne({_id: id}, function(err, userDoc) {
       callback(err, userDoc);
     });
   },
   findOne: function(id, callback) {
-    console.log('in findOne, ID:', id);
+    // console.log('in findOne, ID:', id);
     Users.findOne({username: id.username}, function(err, userDoc) {
       callback(err, userDoc);
     });

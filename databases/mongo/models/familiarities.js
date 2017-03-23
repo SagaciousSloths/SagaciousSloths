@@ -18,7 +18,7 @@ var Familiarities = mongoose.model('Familiarities', FamiliaritySchema);
 module.exports = {
 
   addFamiliarity: function (userId, cardId, algoData) {
-    console.log('in addFamiliarity, algoData:', algoData);
+    console.log('in addFamiliarity, userId:', userId, '  cardId:', cardId, '  algoData:', algoData);
     module.exports.populateDB([{
       StaffID: userId,
       StudentID: cardId,
