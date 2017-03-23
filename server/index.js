@@ -37,12 +37,12 @@ function(username, password, done) {
 ));	
   
 passport.serializeUser(function(user, done) {
-  console.log('!!!!!!!!!! serialize being called for user:', user);
+  // console.log('!!!!!!!!!! serialize being called for user:', user);
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  console.log('!!!!!!!!!! de-serialize being called for id:', id);
+  // console.log('!!!!!!!!!! de-serialize being called for id:', id);
   mongoUsers.findById(id, function(err, user) {
     done(err, user);
   });

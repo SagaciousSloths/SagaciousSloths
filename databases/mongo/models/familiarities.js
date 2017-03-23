@@ -24,7 +24,7 @@ module.exports = {
       StudentID: cardId,
       AlgoParams: algoData
     }], ((result) => {
-      console.log('Result of addFamiliarity:', result);
+      // console.log('Result of addFamiliarity:', result);
     })
     );
   },

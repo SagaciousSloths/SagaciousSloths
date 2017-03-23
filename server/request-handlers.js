@@ -14,7 +14,8 @@ var getDeckBucketCounts = function (req, res) {
   // Buckets are: 'red', 'orange' and 'green'
 
   // Future sprint: get current user ID and pass it as param to getUserScores
-  var userId = 0;
+  var userId = req.user._id;
+  // console.log('in get deck buckets, req.user:', req.user);
 
   mongo.getCardIds(userId, function(cardIds) {
     // cardIds = {
@@ -22,7 +23,7 @@ var getDeckBucketCounts = function (req, res) {
     //   'complex unique string2': {algoData},
     // };
 
-    console.log('received from Mongoose getCardIds:', cardIds);
+    // console.log('received from Mongoose getCardIds:', cardIds);
 
     var cards = googleSheet.getAllCards(function(cards) {
       // cards = [ {
@@ -81,8 +82,10 @@ var getDeckQuiz = function (req, res) {
   var deckname = req.query.deck;  
 
   // Future sprint: get current user ID and pass it as param to getUserScores
-  var userId = 0;
+  // var userId = 0;
+  console.log('in get deck quiz, req.user:', req.user);
 
+  var userId = req.user._id;
   // query Familiarities from highest to lowest score for user
   // where algoData.bucket is not green
   // into ordered array of cardIds, highest red score first
@@ -144,7 +147,7 @@ var updateUserCardFamiliarity = function (req, res) {
 var resetMongo = function (req, res) {
   mongo.resetDB(function(FamiliaritiesResetResult) {
     console.log('FamiliaritiesResetResult: ', FamiliaritiesResetResult);
-    res.status(200).send('Mongo Familiarities table reset');
+    res.status(200).send('Mongo Familiarities and Users tables reset');
   });
   mongoUsers.resetModel(function(UsersResetResult) {
     console.log('UsersResetResult: ', UsersResetResult);
