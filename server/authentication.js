@@ -19,11 +19,16 @@ exports.signup = function (req, res) {
     res.redirect('/login.html');
   } else {
     console.log('success in call to mongo addUser (redirect to /), result:', result);
-    res.redirect('/');
-  }
-});
-
+    passport.authenticate('local')(req, res, function () {
+      res.redirect('/');
+    });
+      // fake a login post - what does passport authenticate need?
+  	}
+  	});
 };
+
+
+           
 
 
 exports.authenticate = function (req, res) {
