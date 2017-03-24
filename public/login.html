@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>FaceIt Login</title>
+    <title>Familihr Login</title>
 </head>
 <body>
+    <h3>Familihr</h3>
+    <div>Become familiar with HR!</div>
+    <h3>  </h3>
+    <form action="/signup" method="post">
+        <div><strong>Sign up:</strong></div>
+        <div>
+            <label>Username:</label>
+            <input type="text" name="username"/>
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password"/>
+        </div>
+        <div>
+            <input type="submit" value="Sign up"/>
+        </div>
+    </form>
+    <h3>  </h3>
     <form action="/login" method="post">
-        <h3>Familihr</h3>
         <div><strong>Log in:</strong></div>
         <div>
             <label>Username:</label>
@@ -16,8 +33,9 @@
             <input type="password" name="password"/>
         </div>
         <div>
-            <input type="submit" value="Log In"/>
+            <input type="submit" value="Log in"/>
         </div>
     </form>
+
 </body>
 </html>
