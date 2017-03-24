@@ -19,7 +19,7 @@ var Familiarities = mongoose.model('Familiarities', FamiliaritySchema);
 module.exports = {
 
   addFamiliarity: function (userId, cardId, algoData) {
-    console.log('in addFamiliarity, userId:', userId, '  cardId:', cardId, '  algoData:', algoData);
+    // console.log('in addFamiliarity, userId:', userId, '  cardId:', cardId, '  algoData:', algoData);
     module.exports.populateDB([{
       StaffID: userId,
       StudentID: cardId,
@@ -53,7 +53,7 @@ module.exports = {
       let cardIds = {};
 
       userCards.forEach(function(card) {
-        console.log('card', card, 'card.StudentID', card.StudentID, 'Algo params:', card.AlgoParams);
+        // console.log('card', card, 'card.StudentID', card.StudentID, 'Algo params:', card.AlgoParams);
         cardIds[card.StudentID] = card.AlgoParams;
       });
 
@@ -70,14 +70,14 @@ module.exports = {
     console.log('the cuttoff time', cutoff);
     Familiarities.find(
       {StaffID: userId, 
-       'AlgoParams.nextQuizDate': {$lt: cutoff},
+        'AlgoParams.nextQuizDate': {$lt: cutoff},
       },
       function(err, orderedCards) {
         if (err) {
           console.error(err);
         }
         orderedCards = orderedCards.sort((a, b) => a.AlgoParams.nextQuizDate - b.AlgoParams.nextQuizDate);
-        console.log('ordered card ids in familiarities:', orderedCards);
+        // console.log('ordered card ids in familiarities:', orderedCards);
         var orderedCardIds = orderedCards.map(function(card) {
           // console.log('card:', card);
           return card.StudentID;
@@ -92,7 +92,7 @@ module.exports = {
       {StaffID: userId, StudentID: cardId},
       function(card) {
 
-        console.log('getAlgoParams in familiarities:', card);
+        // console.log('getAlgoParams in familiarities:', card);
 
         if (card.length > 1) {
           console.error('Logic error: multiple cards found for same user-card pair, using the first');
@@ -113,7 +113,7 @@ module.exports = {
         if (err) {
           return handleError(err);
         } else {
-          console.log('from Mongo setAlgoParams: ', data);
+          // console.log('from Mongo setAlgoParams: ', data);
           callback(data);
         }
       }
@@ -175,11 +175,11 @@ module.exports = {
 };
 
 
-let cb = ((result) => console.log(result));
-// let newCards = [{StudentID: 'Jeff', AlgoParams: {bucket: 'green'}}, {StudentID: 'David'}, {StudentID: 'JG'}, {StudentID: 'Kay'}];
-// module.exports.resetDB(cb);
-// module.exports.populateDB(newCards, cb);
-module.exports.findAll(cb);
-module.exports.getOrderedCardIds(0, cb);
+// let cb = ((result) => console.log(result));
+// // let newCards = [{StudentID: 'Jeff', AlgoParams: {bucket: 'green'}}, {StudentID: 'David'}, {StudentID: 'JG'}, {StudentID: 'Kay'}];
+// // module.exports.resetDB(cb);
+// // module.exports.populateDB(newCards, cb);
+// module.exports.findAll(cb);
+// module.exports.getOrderedCardIds(0, cb);
 // module.exports.setAlgoParams(0, 'DavidDeng', { nextQuizDate: 14900000000, repetition: 2, efactor: 3.5 }, cb);
 
