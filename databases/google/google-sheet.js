@@ -1,14 +1,12 @@
 var https = require('https');
-'strict';
+require('dotenv').config();
+'strict'; 
 
 // Google sheet
-const API_KEY = 'AIzaSyAg7N0a05JYqyZDYdT3gZIJiN1wGaZO6-w';
-var url = 'https://sheets.googleapis.com/v4/spreadsheets/';
-var spreadsheetId = '1T-tnJlfiqUyQZMEJe9W-d6OKg5vVchhjn_L7ffIXyyI';
-// https://docs.google.com/spreadsheets/d/1T-tnJlfiqUyQZMEJe9W-d6OKg5vVchhjn_L7ffIXyyI/edit?usp=sharing
-
-var sheetRange = '/values:batchGet?majorDimension=ROWS&ranges=B2%3AE100&valueRenderOption=FORMATTED_VALUE&key=';
-
+const API_KEY = process.env.API_KEY;
+var url = process.env.GOOGLESHEETS_URL;
+var spreadsheetId = process.env.SPREADSHEET_ID;
+var sheetRange = process.env.SHEETRANGE;
 // exports.quiz = {
 //   get: function (req, res) {
 //     console.log('In G. get');
