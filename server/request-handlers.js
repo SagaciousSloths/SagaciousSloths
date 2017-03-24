@@ -13,7 +13,7 @@ var algorithm = require('./repetition-algorithm');
 var getDeckBucketCounts = function (req, res) {
   // Buckets are: 'red', 'orange' and 'green'
 
-  console.log('in get deck buckets, req:', req);
+  // console.log('in get deck buckets, req:', req);
 
   var userId = req.user._id;
 
@@ -89,8 +89,9 @@ var getDeckQuiz = function (req, res) {
   // into ordered array of cardIds, highest red score first
   // Initial implementation: return rows with red first, then orange,
   // ignoring green rows
+  let threshold = algorithm.getQuizDateThreshhold();
 
-  mongo.getOrderedCardIds(userId, function(orderedCardIds) {
+  mongo.getOrderedCardIds(userId, threshold, function(orderedCardIds) {
     // console.log('ordered cardIds in getDeckQuiz:', orderedCardIds);
     // TESTING:
     // cardIds = ['complex unique string1', 'complex unique string2': '1'];

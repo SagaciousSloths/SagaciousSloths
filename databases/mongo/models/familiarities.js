@@ -1,7 +1,6 @@
 
 var mongoose = require('mongoose');
 var db = require('../config');
-var algorithm = require('../../../server/repetition-algorithm');
 
 var FamiliaritySchema = mongoose.Schema({
   StaffID: {type: String, default: '0'},
@@ -63,25 +62,27 @@ module.exports = {
   },
 
 
-  getOrderedCardIds(userId, callback) {
+  getOrderedCardIds(userId, cutoff, callback) {
   //return an ordered array of userIds, from smallest (= earliest) nextQuizDate to largest
-  // TODO: ask algo for limit on nextQuizDate for 'green'
-    var cutoff = algorithm.getQuizDateThreshhold();
-    console.log('the cuttoff time', cutoff);
+    // console.log('the cuttoff time', cutoff);
     Familiarities.find(
       {StaffID: userId, 
         'AlgoParams.nextQuizDate': {$lt: cutoff},
       },
       function(err, orderedCards) {
         if (err) {
-          console.error(err);
+          console.error('Error in getOrderedCardIds', err);
         }
-        orderedCards = orderedCards.sort((a, b) => a.AlgoParams.nextQuizDate - b.AlgoParams.nextQuizDate);
-        // console.log('ordered card ids in familiarities:', orderedCards);
-        var orderedCardIds = orderedCards.map(function(card) {
-          // console.log('card:', card);
-          return card.StudentID;
-        });
+        if (orderedCards) {
+          orderedCards = orderedCards.sort((a, b) => a.AlgoParams.nextQuizDate - b.AlgoParams.nextQuizDate);
+          // console.log('ordered card ids in familiarities:', orderedCards);
+          var orderedCardIds = orderedCards.map(function(card) {
+            // console.log('card:', card);
+            return card.StudentID;
+          });          
+        } else {
+          orderedCardIds = [];
+        }
 
         callback(orderedCardIds);
       }); 
