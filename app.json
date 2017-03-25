@@ -19,5 +19,13 @@
     {
       "url": "heroku/nodejs"
     }
-  ]
+  ],
+  "environments": {
+    "test": {
+      "scripts": {
+        "test-setup": "npm install",
+        "test": "grunt test"
+      }
+    }
+  }
 }
