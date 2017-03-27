@@ -4,16 +4,19 @@
 }
 
 .statBox {
+  font-family: arial;
   margin-top: 85px;
+  text-align: center;  
   display: box;
   float: left;
-  background-color: #f2eadc;
-  padding: 10px 10px;
+  background-color: #f9f6f1;
+  padding: 20px 20px;
   padding-top: 10px;
   padding-bottom: 10px;
-  width: 40px;
+  width: 50px;
   height: 10px;
   border-radius: 5px;
+  box-shadow: 0 2px #b2b2b2;
 }
 
 
@@ -25,7 +28,8 @@
 .profilePic {
   display: block;
   margin: auto;
-  background-color: #ffdbac;
+  /*background-color: #ffdbac;*/
+  background-color: #ffedcc;
   padding: 15px;
   width: relative;
   height: 200px;
@@ -34,11 +38,12 @@
 }
 
 .cohortButton {
+  font-family: arial;
   display: box;
   margin-right: 50px;
-  margin-top: 100px;
   float: left;
-  background-color: #729cac;
+  margin-top: 100px;
+  background-color: #ffa500;
   padding: 25px;
   width: 80px;
   height: 80px;
@@ -76,16 +81,18 @@
   text-decoration: none;
   outline: none;
   color: #fff;
-  background-color: #6ed4cf;
+  /*background-color: #6ed4cf;*/
+  /*background-color: #ffa500;*/
+  background-color: #02b04b;
   border: none;
   border-radius: 5px;
   box-shadow: 0 5px #b2b2b2;
 }
 
-.readyButton:hover {background-color: #607399}
+.readyButton:hover {background-color: #008d3b}
 
 .readyButton:active {
-  background-color: #515151;
+  background-color: #006329;
   box-shadow: 0 5px #b2b2b2;
   transform: translateY(4px);
 }
@@ -96,8 +103,8 @@
 }
 
 .cohortButtonContainer {
-  margin-top: 100px;
   text-align: center;
+  margin-left: 100px;
 }
 
 .gotItButton {
@@ -203,17 +210,25 @@
 .menuBar {
   display: block;
   float: top;
-  background-color: #fb8f02;
+}
+
+.logout {
+  margin-left: 700px;
+}
+
+.dashboard {
+  margin-left: 800px;
 }
 
 .logo {
+  position: absolute;
   text-align: left;
   float: left;
   display: inline-grid;
   padding: 10px 20px;
   /*background-color: #fb8f02;*/
   border-radius: 10px;
-  background-color: #ae0404;
+  background-color: #f04800;
   font-family: arial;
   color: white;
   list-style: none;
@@ -228,10 +243,19 @@
   padding: 10px 20px;
   cursor: pointer;
   /*background-color: #fb8f02;*/
-  background-color: #ae0404;
+  background-color: #e70000;
   color: white;
+  border-radius: 5px;
+  /*position: absolute;*/
+  margin-left: 500px;
+  margin-right: 200px;
 }
 
 .rightAlign:hover {
-  background-color: #ec8806;
+  background-color: #c00;
+}
+
+.cohortButtonContainer {
+  display: block;
+
 }

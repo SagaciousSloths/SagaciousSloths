@@ -145,7 +145,7 @@ class Quiz extends React.Component {
   render() {
     return (
       <div>
-      <Menubar items={['Dashboard', 'Log Out']} loadDashboard={this.loadDashboard}/>
+      <Menubar items={['Log Out', 'Dashboard']} loadDashboard={this.loadDashboard}/>
       {this.state.page === 'dashboard' ? (
         <div className="cohortButtonContainer">
           {this.state.cohortList.map((cohort, index) => {
@@ -157,11 +157,11 @@ class Quiz extends React.Component {
                   <span className="orangeStat">{this.state.cohortStats[cohort].orange}</span>
                   <span className="greenStat">{this.state.cohortStats[cohort].green}</span>
                 </div>
-                <ul>
-                  <li key={index} onClick={(cohort) => { this.loadQuiz(cohort); }} className="cohortButton">
+                <div>
+                  <div key={index} onClick={(cohort) => { this.loadQuiz(cohort); }} className="cohortButton">
                     {cohort}
-                  </li>
-                </ul>
+                  </div>
+                </div>
               </div>
             );
           })}
