@@ -39,11 +39,9 @@ class Menubar extends React.Component {
     var context = this;
     return (
       <div>
-        <div className="logo">
-          <div>FamiliHR</div>
-        </div>
         <ul>
-          { 
+          <li className="logo">FamiliHR</li>
+          {
             context.props.items.map(function(item, index){
               return <li className="rightAlign" onClick={context.handleMenuSelect.bind(context, index)}>{item}</li>;
             })
