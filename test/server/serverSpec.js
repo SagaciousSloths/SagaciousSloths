@@ -1,3 +1,4 @@
+require('dotenv').config();
 var request = require('request');
 var expect = require('chai').expect;
 var port = process.env.port || 3000;
