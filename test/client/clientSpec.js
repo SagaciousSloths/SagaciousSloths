@@ -1,8 +1,7 @@
-
-import React from 'react';
-import { expect } from 'chai';
-import { shallow, mount, render } from 'enzyme';
-import Quiz from '../../client_react/src/index.js';
+// import React from 'react';
+// import { expect } from 'chai';
+// import { shallow, mount, render } from 'enzyme';
+// import Quiz from '../../client_react/src/index.js';
 
 // describe("A suite", function() {
 //   // it("contains spec with an expectation", function() {

@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 var port = process.env.port || 3000;
 var url = process.env.url || 'http://127.0.0.1';
 
-describe('dashboard GET', function() {
+xdescribe('dashboard GET', function() {
   it('should respond to GET requests for /dashboard with a 200 status code', function(done) {
     request(url + ':' + port + '/dashboard', function(error, response, body) {
       expect(response.statusCode).to.equal(200);
@@ -38,7 +38,7 @@ describe('dashboard GET', function() {
   });
 });
 
-describe('quiz GET', function() {
+xdescribe('quiz GET', function() {
   it('should respond to GET requests for /quiz with a 200 status code', function(done) {
     request(url + ':' + port + '/quiz', function(error, response, body) {
       expect(response.statusCode).to.equal(200);
