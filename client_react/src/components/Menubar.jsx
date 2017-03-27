@@ -38,7 +38,7 @@ class Menubar extends React.Component {
   render() {
     var context = this;
     return (
-      <div className="menuBar">
+      <div>
         <ul>
           <li className="logo">FamiliHR</li>
           {

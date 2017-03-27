@@ -1,44 +1,85 @@
-.answerCorrect {
-  font-family: Arial;
-  text-align: center;
+/*dashboard page*/
+.menuBar {
+  display: block;
+  float: top;
+  background-color: #fb8f02;
 }
 
+.logo {
+  text-align: left;
+  float: left;
+  display: inline-grid;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #5b91e3;
+  font-family: arial;
+  color: white;
+  list-style: none;
+}
+
+/*refers to "log out" and "dashboard" buttons */
+.rightAlign {
+  display: block;
+  font-family: arial;
+  list-style: none;
+  float: right;
+  text-align: right;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #7eacf2;
+  color: white;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.rightAlign:hover {
+  background-color: #5b91e3;
+}
+
+/*stat box*/
 .statBox {
   margin-top: 85px;
   display: box;
+  font-family: arial;
   float: left;
-  background-color: #f2eadc;
+  text-align: center;
+  background-color: #f9f6f1;
   padding: 10px 10px;
   padding-top: 10px;
   padding-bottom: 10px;
-  width: 40px;
+  width: 50px;
   height: 10px;
   border-radius: 5px;
+  position: relative;
+  margin-right: -50px;
+  box-shadow: 0 2px #b2b2b2;
 }
 
-
-#quiz {
-  background-color: #ffffff;
-  padding: 100px;
-}
-
-.profilePic {
-  display: block;
-  margin: auto;
-  background-color: #ffdbac;
-  padding: 15px;
-  width: relative;
-  height: 200px;
-  border-radius: 8px;
+.redStat {
+  margin-right: 10px;
   text-align: center;
+  color: #c10b0b;
 }
 
+.orangeStat {
+  margin-right: 10px;
+  text-align: center;
+  color: #f2a208;
+}
+
+.greenStat {
+  margin-right: 10px;
+  text-align: center;
+  color: #34b62f;
+}
+
+/*buttons with cohort names*/
 .cohortButton {
   display: box;
   margin-right: 50px;
   margin-top: 100px;
   float: left;
-  background-color: #729cac;
+  background-color: #ffa500;
   padding: 25px;
   width: 80px;
   height: 80px;
@@ -50,6 +91,7 @@
   border: none;
   box-shadow: 0 5px #b2b2b2;
   font-size: 20px;
+  font-family: arial;
 }
 
 .cohortButton:hover {background-color: #ec8806}
@@ -60,11 +102,25 @@
   transform: translateY(4px);
 }
 
-.buttonContainer {
+
+/* quiz page: 1) actual quiz part including profile pic and "show me the answer button" */
+#quiz {
+  background-color: #ffffff;
+  padding: 100px;
+}
+
+.profilePic {
   display: block;
+  margin: auto;
+  background-color: #fdd38b;
+  padding: 10px;
+  width: relative;
+  height: 200px;
+  border-radius: 5px;
   text-align: center;
 }
 
+/* edited to be "show me the answer" button*/
 .readyButton {
   display: block;
   margin: auto;
@@ -76,13 +132,13 @@
   text-decoration: none;
   outline: none;
   color: #fff;
-  background-color: #6ed4cf;
+  background-color: #5b91e3;
   border: none;
   border-radius: 5px;
   box-shadow: 0 5px #b2b2b2;
 }
 
-.readyButton:hover {background-color: #607399}
+.readyButton:hover {background-color: #4e82d0}
 
 .readyButton:active {
   background-color: #515151;
@@ -90,23 +146,30 @@
   transform: translateY(4px);
 }
 
+/* quiz page - 2) answer part */
+
 .studentName {
-	font-family: Arial;
+  font-family: Arial;
   text-align: center;
 }
 
-.cohortButtonContainer {
-  margin-top: 100px;
+.answerCorrect {
+  font-family: Arial;
+  text-align: center;
+}
+
+.buttonContainer {
+  display: block;
   text-align: center;
 }
 
 .gotItButton {
   width: 60px;
   height: 50px;
-	background-color: #34b62f;
-	color: white;
-	font-family: Arial;
-	display: inline-block;
+  background-color: #34b62f;
+  color: white;
+  font-family: Arial;
+  display: inline-block;
   padding: 10px 10px;
   font-size: 15px;
   cursor: pointer;
@@ -130,10 +193,10 @@
 .almostButton {
   width: 60px;
   height: 50px;
-	background-color: #f2a208;
-	color: white;
-	font-family: Arial;
-	display: inline-block;
+  background-color: #f2a208;
+  color: white;
+  font-family: Arial;
+  display: inline-block;
   padding: 10px 10px;
   font-size: 15px;
   cursor: pointer;
@@ -157,10 +220,10 @@
 .nopeButton {
   width: 60px;
   height: 50px;
-	background-color: #c10b0b;
-	color: white;
-	font-family: Arial;
-	display: inline-block;
+  background-color: #c10b0b;
+  color: white;
+  font-family: Arial;
+  display: inline-block;
   padding: 10px 10px;
   font-size: 15px;
   cursor: pointer;
@@ -179,59 +242,4 @@
   background-color: #b03131;
   box-shadow: 0 5px #b2b2b2;
   transform: translateY(4px);
-}
-
-.redStat {
-  margin-right: 10px;
-  text-align: center;
-  color: #c10b0b;
-}
-
-.orangeStat {
-  margin-right: 10px;
-  text-align: center;
-  color: #f2a208;
-}
-
-.greenStat {
-  margin-right: 10px;
-  text-align: center;
-  color: #34b62f;
-}
-
-
-.menuBar {
-  display: block;
-  float: top;
-  background-color: #fb8f02;
-}
-
-.logo {
-  text-align: left;
-  float: left;
-  display: inline-grid;
-  padding: 10px 20px;
-  /*background-color: #fb8f02;*/
-  border-radius: 10px;
-  background-color: #ae0404;
-  font-family: arial;
-  color: white;
-  list-style: none;
-}
-
-.rightAlign {
-  display: block;
-  font-family: arial;
-  list-style: none;
-  float: right;
-  text-align: right;
-  padding: 10px 20px;
-  cursor: pointer;
-  /*background-color: #fb8f02;*/
-  background-color: #ae0404;
-  color: white;
-}
-
-.rightAlign:hover {
-  background-color: #ec8806;
 }
