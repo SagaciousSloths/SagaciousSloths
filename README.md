@@ -1,13 +1,27 @@
-# FamiliHR
+Project name: FamiliHR
 
-> Fullstack JS app for spaced repetition applied for rapid learning of names and faces
+----- High level intro:
+Fullstack JS app to help members/guests/clients of organizations remember the names of other members/guests/clients.the staff of an organization learn quickly the names of their students or guests. 
+The app relies on a spaced repetition algorithm to optimize the learning.
+The app was designed based on interviews with Hack Reactor staff.
+
+Usage flow for HR:
+1. Before joining a cohort, students put pictures of themselves on imgur and enter their names and image URLs into a Google form 
+2. Google puts all entries into a Google Sheet (automatically)
+3. HR staff enters additional information on the sheet (e.g. cohort name)
+4. Familihr software uses the Google sheet as the single source of student information (card and deck definition)
+5. Familihr also uses 2 Mongo models:
+   * Users: name, password and ID of registered users of the Familihr software
+   * Familiarities: captures how well each registered user remembers each card
+
+
 
 ## Team
 
   - Kay Albito
-  - Jeffrey Milberger
   - J-G Demathieu
   - David Deng
+  - Jeffrey Milberger
 
 ## Table of Contents
 
@@ -20,6 +34,11 @@
 1. [Contributing](#contributing)
 
 ## Usage
+
+Terminology:
+Card: 
+Deck: a group of cards defined in the Google spreadsheet 
+Quiz: 
 
 === Google Form modifications ===
 HR staff can modify the sample Google Form:
@@ -128,7 +147,7 @@ grunt test
 
 ### Roadmap
 
-View the project roadmap [here](https://docs.google.com/spreadsheets/d/1PSIhSFkC3L9zVjc7R8dG5MlChLU9AGBiAOxqbMcarJw/edit?usp=drive_web)
+View the project roadmap: https://docs.google.com/spreadsheets/d/1PSIhSFkC3L9zVjc7R8dG5MlChLU9AGBiAOxqbMcarJw/edit#gid=0
 
 
 ## Contributing
