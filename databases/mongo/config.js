@@ -1,3 +1,4 @@
+require('dotenv').config();
 var mongoose = require('mongoose');
 
 // Form Mongo database with mongoose in index.js
