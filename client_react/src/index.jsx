@@ -25,7 +25,6 @@ class Quiz extends React.Component {
   }
 
   componentDidMount () {
-    
     this.loadDashboard();
   }
 
@@ -41,21 +40,13 @@ class Quiz extends React.Component {
       _this.setState({
         page: 'dashboard'
       });
-      console.log(_this.state.cohortStats);
     });
   }
 
   saveUserAnswer(event, answer) {
     event.preventDefault();
     let cardId = this.state.cards[this.state.counter].id;
-
-
-    console.log('React: sending to server the answer:', answer, 'for cardID:', cardId);
-
     var counter = this.state.counter + 1;
-
-    console.log('counter:', counter, '  cards length:', this.state.cards.length);
-
     if (counter < this.state.cards.length) {
       this.setState({
         counter: counter,
@@ -63,46 +54,33 @@ class Quiz extends React.Component {
       });
     }
     var _this = this;
-
     $.ajax({
       url: '/api/card',
       method: 'POST',
-
       contentType: 'application/json',
-
       data: JSON.stringify({ cardId: cardId, answer: answer}),
       success: function() {
-        console.log('ajax success updating card');
-
-        console.log('counter:', counter, 'cards.length:', _this.state.cards.length);
         if (counter >= _this.state.cards.length ) {
-          _this.loadDashboard();  // load the dashboard
+          _this.loadDashboard();
         }
-
       },
       error: function(err) {
         console.error('error in saveUserAnswer:', err);
       }
     });
-
-
   }
 
   loadQuiz(event) {
-    console.log('loading quiz for cohort:', event.target.innerHTML);
     $.ajax({
       url: '/quiz',
       method: 'GET',
       data: {deck: event.target.innerHTML},
       success: function(cards) {
-        console.log('loadState, cards:', cards);
         this.setState({cards: cards});
         this.setState({counter: 0});
-
         this.setState({
           page: 'quiz'
         });
-
       }.bind(this),
       error: function(err) {
         console.error('error loading quiz', err);
@@ -127,8 +105,6 @@ class Quiz extends React.Component {
       }
     });
   }
-
-
 
   isReady() {
     this.setState({
